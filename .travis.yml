@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+    - "0.12"
+    - iojs
+script: npm test
+env:
+  - PORT=8080 BASE_URL="http://localhost:8080" STATIC_PATH="static"

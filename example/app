@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+require('coffee-script/register');
+var fragments = require('../src/fragments');
+
+var runner = fragments.configure({
+  init: (__dirname + '/init'),
+  application: [(__dirname + '/application')],
+  request: (__dirname + '/request'),
+  middleware: (__dirname + '/middleware')
+});
+
+if (require.main === module) {
+  runner.command.apply(null, process.argv.slice(2));
+} else {
+  module.exports = runner.factory;
+}
