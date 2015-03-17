@@ -72,9 +72,6 @@ module.exports.fragments_redis = ->
 module.exports.fragments_bcrypt = (fragments_Promise) ->
   fragments_Promise.promisifyAll require 'bcrypt'
 
-module.exports.fragments_marked = ->
-  require 'marked'
-
 module.exports.fragments_uuid = ->
   require 'node-uuid'
 
