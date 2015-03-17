@@ -57,7 +57,7 @@
     "zuvor": "0.1",
     "url-pattern": "0.6.0",
     "passage": "1.3.0",
-    "react-kup": "git+ssh://git@github.com:snd/react-kup#997776f6e77ddcdb5b680415385c6902b44ad72a"
+    "react-kup": "0.4.0"
   },
   "devDependencies": {
     "nodeunit": "0.9.1",
