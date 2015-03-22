@@ -116,3 +116,20 @@ module.exports.route_reactKup = (GET) ->
     layout
   ) ->
     end404ReactWithLayout layout, ComponentContent
+
+module.exports.route_sessionGet = (GET) ->
+  GET '/session', (
+    session
+    endJSON
+  ) ->
+    endJSON session
+
+module.exports.route_sessionSet = (PATCH) ->
+  PATCH '/session', (
+    session
+    body
+    endJSON
+    _
+  ) ->
+    _.extend session, body
+    endJSON session

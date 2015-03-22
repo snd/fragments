@@ -26,6 +26,8 @@ module.exports.server = (
   route_kup
   route_react
   route_reactKup
+  route_sessionSet
+  route_sessionGet
 ) ->
   sequenz [
     commonMiddlewarePrelude
@@ -41,6 +43,8 @@ module.exports.server = (
     route_kup
     route_react
     route_reactKup
+    route_sessionSet
+    route_sessionGet
 
     MIDDLEWARE (endNotFound) ->
       endNotFound()
