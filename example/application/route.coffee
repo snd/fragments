@@ -11,6 +11,7 @@ module.exports.route_echo = (GET) ->
     isGzipEnabled
     matchCurrentUrl
     basicAuthCredentials
+    session
   ) ->
     endJSON
       method: method
@@ -25,6 +26,7 @@ module.exports.route_echo = (GET) ->
       alsoMatch: matchCurrentUrl('/echo')
       noMatch: matchCurrentUrl('/echo/:id')
       basicAuthCredentials: basicAuthCredentials
+      session: session
 
 module.exports.route_error = (GET) ->
   GET '/error', (

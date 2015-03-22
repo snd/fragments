@@ -4,4 +4,6 @@ node_js:
     - iojs
 script: npm test
 env:
-  - PORT=8080 BASE_URL="http://localhost:8080" STATIC_PATH="static"
+  - PORT=8080 BASE_URL="http://localhost:8080" STATIC_PATH="static" SESSION_SECRET="338e281187f9e8f66c792705203b4c50" REDIS_SESSION_STORE_PREFIX="example:" REDIS_URL="redis://localhost:6379/" REDIS_DATABASE=0
+services:
+  - redis-server

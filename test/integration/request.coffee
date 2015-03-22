@@ -80,6 +80,13 @@ module.exports =
             alsoMatch: {}
             noMatch: null
             basicAuthCredentials: null
+            session:
+              cookie:
+                path: '/'
+                expires: null
+                originalMaxAge: null
+                httpOnly: true
+
           shutdown()
         .then ->
           test.done()
