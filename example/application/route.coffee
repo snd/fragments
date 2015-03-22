@@ -133,3 +133,11 @@ module.exports.route_sessionSet = (PATCH) ->
   ) ->
     _.extend session, body
     endJSON session
+
+module.exports.route_sessionDelete = (DELETE) ->
+  DELETE '/session', (
+    session
+    end
+  ) ->
+    session.destroy ->
+      end()

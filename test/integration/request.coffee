@@ -345,3 +345,89 @@ module.exports =
           shutdown()
         .then ->
           test.done()
+
+  'session': (test) ->
+    example (
+      command_serve
+      shutdown
+      envStringBaseUrl
+    ) ->
+      jar = request.jar()
+      command_serve()
+        .then ->
+          requestPromise(
+            method: 'GET'
+            json: true
+            url: envStringBaseUrl + '/session'
+            jar: jar
+          )
+        .then ([response]) ->
+          delete response.body.cookie
+          test.deepEqual response.body, {}
+
+          requestPromise(
+            method: 'PATCH'
+            url: envStringBaseUrl + '/session'
+            body: {
+              a: 1
+            }
+            json: true
+            jar: jar
+          )
+        .then ([response]) ->
+          delete response.body.cookie
+          test.deepEqual response.body, {a: 1}
+
+          requestPromise(
+            method: 'GET'
+            json: true
+            url: envStringBaseUrl + '/session'
+            jar: jar
+          )
+        .then ([response]) ->
+          delete response.body.cookie
+          test.deepEqual response.body, {a: 1}
+
+          requestPromise(
+            method: 'PATCH'
+            url: envStringBaseUrl + '/session'
+            body: {
+              a: 2
+              b: 3
+            }
+            json: true
+            jar: jar
+          )
+        .then ([response]) ->
+          delete response.body.cookie
+          test.deepEqual response.body, {a: 2, b: 3}
+
+          requestPromise(
+            method: 'GET'
+            url: envStringBaseUrl + '/session'
+            json: true
+            jar: jar
+          )
+        .then ([response]) ->
+          delete response.body.cookie
+          test.deepEqual response.body, {a: 2, b: 3}
+
+          requestPromise(
+            method: 'DELETE'
+            url: envStringBaseUrl + '/session'
+            jar: jar
+          )
+        .then ([response]) ->
+          requestPromise(
+            method: 'GET'
+            url: envStringBaseUrl + '/session'
+            json: true
+            jar: jar
+          )
+        .then ([response]) ->
+          delete response.body.cookie
+          test.deepEqual response.body, {}
+
+          shutdown()
+        .then ->
+          test.done()
