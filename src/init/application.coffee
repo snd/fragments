@@ -79,6 +79,7 @@ module.exports.aliases = ->
   fragments_config_postgresDatabase: 'envStringPostgresDatabase'
   fragments_config_postgresPoolSize: 'envStringPostgresPoolSize'
   fragments_config_bcryptCost: 'envIntBcryptCost'
+  fragments_config_staticPath: 'envStringStaticPath'
 
 module.exports.aliasResolver = (
   forge

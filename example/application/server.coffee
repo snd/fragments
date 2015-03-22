@@ -1,27 +1,3 @@
-module.exports.commonMiddleware = (
-  sequenz
-
-  envStringStaticPath
-
-  expressCompression
-  expressServeStatic
-  expressBodyParser
-  expressCookieParser
-  queryParser
-) ->
-  sequenz [
-    expressCompression()
-
-    expressServeStatic(envStringStaticPath)
-
-    expressBodyParser.urlencoded({extended: true})
-    expressBodyParser.json()
-
-    queryParser()
-
-    expressCookieParser()
-  ]
-
 module.exports.helloWorldServer = (
   MIDDLEWARE
   sequenz
@@ -37,7 +13,7 @@ module.exports.server = (
   MIDDLEWARE
 
   sequenz
-  commonMiddleware
+  commonMiddlewarePrelude
 
   route_echo
   route_error
@@ -52,7 +28,7 @@ module.exports.server = (
   route_reactKup
 ) ->
   sequenz [
-    commonMiddleware
+    commonMiddlewarePrelude
 
     route_echo
     route_error
