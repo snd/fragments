@@ -47,10 +47,10 @@ for identifier, header of COMMON_RESPONSE_HEADERS
 module.exports.fragments_setHeaders = (
   fragments_setHeader
 ) ->
-  (headersObject) ->
+  (headers) ->
     unless 'object' is typeof headers
       throw new Error 'needs one argument which must be an object'
-    for own key, value of headersObject
+    for own key, value of headers
       fragments_setHeader(key, value)
 
 ################################################################################

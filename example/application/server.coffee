@@ -14,6 +14,7 @@ module.exports.server = (
 
   sequenz
   commonMiddlewarePrelude
+  autoHeadersMiddleware
 
   route_echo
   route_error
@@ -32,6 +33,7 @@ module.exports.server = (
 ) ->
   sequenz [
     commonMiddlewarePrelude
+    autoHeadersMiddleware
 
     route_echo
     route_error

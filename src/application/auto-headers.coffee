@@ -43,9 +43,9 @@ module.exports.fragments_autoHeaders = ->
   }
 
 module.exports.fragments_autoHeadersMiddleware = (
-  fragments_factoryToMiddleware
+  fragments_MIDDLEWARE
 ) ->
-  fragments_factoryToMiddleware (
+  fragments_MIDDLEWARE (
     fragments_setHeaders
     fragments_autoHeaders
     fragments_next
