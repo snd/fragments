@@ -30,6 +30,8 @@ module.exports.server = (
   route_sessionSet
   route_sessionGet
   route_sessionDelete
+  route_tokenCreate
+  route_tokenRead
 ) ->
   sequenz [
     commonMiddlewarePrelude
@@ -49,6 +51,8 @@ module.exports.server = (
     route_sessionSet
     route_sessionGet
     route_sessionDelete
+    route_tokenCreate
+    route_tokenRead
 
     MIDDLEWARE (endNotFound) ->
       endNotFound()

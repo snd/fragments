@@ -12,6 +12,7 @@ module.exports.route_echo = (GET) ->
     matchCurrentUrl
     basicAuthCredentials
     session
+    token
   ) ->
     endJSON
       method: method
@@ -27,6 +28,7 @@ module.exports.route_echo = (GET) ->
       noMatch: matchCurrentUrl('/echo/:id')
       basicAuthCredentials: basicAuthCredentials
       session: session
+      token: token
 
 module.exports.route_error = (GET) ->
   GET '/error', (
@@ -141,3 +143,25 @@ module.exports.route_sessionDelete = (DELETE) ->
   ) ->
     session.destroy ->
       end()
+
+module.exports.route_tokenCreate = (POST) ->
+  POST '/token', (
+    newJwt
+    endJSON
+  ) ->
+    endJSON {token: newJwt({first_name: 'mad', last_name: 'max'})}
+
+module.exports.route_tokenCreate = (POST) ->
+  POST '/token', (
+    newJwt
+    body
+    endJSON
+  ) ->
+    endJSON {token: newJwt(body)}
+
+module.exports.route_tokenRead = (GET) ->
+  GET '/token', (
+    token
+    endJSON
+  ) ->
+    endJSON token
