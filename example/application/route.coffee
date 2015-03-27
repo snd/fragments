@@ -147,13 +147,6 @@ module.exports.route_sessionDelete = (DELETE) ->
 module.exports.route_tokenCreate = (POST) ->
   POST '/token', (
     newJwt
-    endJSON
-  ) ->
-    endJSON {token: newJwt({first_name: 'mad', last_name: 'max'})}
-
-module.exports.route_tokenCreate = (POST) ->
-  POST '/token', (
-    newJwt
     body
     endJSON
   ) ->
