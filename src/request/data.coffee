@@ -43,8 +43,8 @@ module.exports.fragments_isGzipEnabled = (
 
 module.exports.fragments_matchCurrentUrl = (
   fragments_urlWithoutQuerystring
-  fragments_urlPattern
+  fragments_UrlPattern
 ) ->
   (pattern) ->
-    patternObject = fragments_urlPattern.newPattern pattern
+    patternObject = new fragments_UrlPattern pattern
     patternObject.match fragments_urlWithoutQuerystring

@@ -34,7 +34,7 @@ module.exports.fragments_sequenz = ->
 module.exports.fragments_zuvor = ->
   require 'zuvor'
 
-module.exports.fragments_urlPattern = ->
+module.exports.fragments_UrlPattern = ->
   require 'url-pattern'
 
 module.exports.fragments_passage = ->
