@@ -124,7 +124,9 @@ module.exports.runCommand = (lifetime, commandName, arg, args...) ->
 
   if not commandName? or commandName is 'help'
     console.log 'available commands:'
-    getCommandNamesFromLifetime(lifetime).forEach (name) ->
+    _
+    commandNames = getCommandNamesFromLifetime(lifetime)
+    _.sortBy(commandNames).forEach (name) ->
       key = commandNameToKey name
       help = lifetime.factories[key].$help
       console.log name + if help then ' - ' + help else ''
