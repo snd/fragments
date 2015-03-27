@@ -86,6 +86,7 @@ module.exports =
                 expires: null
                 originalMaxAge: null
                 httpOnly: true
+            token: null
 
           shutdown()
         .then ->
@@ -427,6 +428,106 @@ module.exports =
         .then ([response]) ->
           delete response.body.cookie
           test.deepEqual response.body, {}
+
+          shutdown()
+        .then ->
+          test.done()
+
+  'token': (test) ->
+    example (
+      command_serve
+      shutdown
+      envStringBaseUrl
+    ) ->
+      command_serve()
+        .bind({})
+        .then ->
+          requestPromise(
+            method: 'GET'
+            json: true
+            url: envStringBaseUrl + '/token'
+          )
+        .then ([response]) ->
+          test.equal response.statusCode, 200
+          test.equal response.body, null
+
+          requestPromise(
+            method: 'POST'
+            url: envStringBaseUrl + '/token'
+            body: {
+              first_name: 'mad'
+              last_name: 'max'
+            }
+            json: true
+          )
+        .then ([response]) ->
+          test.equal response.statusCode, 200
+          test.ok response.body.token.length > 10
+          this.token = response.body.token
+
+          requestPromise(
+            method: 'GET'
+            json: true
+            headers:
+              authorization: "Bearer #{this.token}"
+            url: envStringBaseUrl + '/token'
+          )
+        .then ([response]) ->
+          test.equal response.statusCode, 200
+          test.deepEqual response.body,
+            first_name: 'mad'
+            last_name: 'max'
+
+          requestPromise(
+            method: 'GET'
+            json: true
+            headers:
+              authorization: "Bearer garbagetoken"
+            url: envStringBaseUrl + '/token'
+          )
+        .then ([response]) ->
+          test.equal response.statusCode, 200
+          test.equal response.body, null
+
+          requestPromise(
+            method: 'POST'
+            url: envStringBaseUrl + '/token'
+            body: {
+              first_name: 'bubba'
+              last_name: 'zanetti'
+            }
+            json: true
+          )
+        .then ([response]) ->
+          test.equal response.statusCode, 200
+          test.ok response.body.token.length > 10
+          token = response.body.token
+
+          requestPromise(
+            method: 'GET'
+            json: true
+            headers:
+              authorization: "Bearer #{token}"
+            url: envStringBaseUrl + '/token'
+          )
+        .then ([response]) ->
+          test.equal response.statusCode, 200
+          test.deepEqual response.body,
+            first_name: 'bubba'
+            last_name: 'zanetti'
+
+          requestPromise(
+            method: 'GET'
+            json: true
+            headers:
+              authorization: "Bearer #{this.token}"
+            url: envStringBaseUrl + '/token'
+          )
+        .then ([response]) ->
+          test.equal response.statusCode, 200
+          test.deepEqual response.body,
+            first_name: 'mad'
+            last_name: 'max'
 
           shutdown()
         .then ->
