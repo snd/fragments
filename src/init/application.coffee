@@ -71,6 +71,8 @@ module.exports.aliases = ->
   fragments_config_port: 'envIntPort'
   fragments_config_baseUrl: 'envStringBaseUrl'
   fragments_config_sessionSecret: 'envStringSessionSecret'
+  fragments_config_jwtSigningSecret: 'envStringJwtSigningSecret'
+  fragments_config_jwtEncryptionPassword: 'envStringJwtEncryptionPassword'
   fragments_config_redisSessionStorePrefix: 'envStringRedisSessionStorePrefix'
   fragments_config_redisUrl: 'envStringRedisUrl'
   fragments_config_redisDatabase: 'envIntRedisDatabase'

@@ -16,6 +16,9 @@ module.exports.fragments_path = ->
 module.exports.fragments_url = ->
   require 'url'
 
+module.exports.fragments_crypto = ->
+  require 'crypto'
+
 module.exports.fragments_querystring = ->
   require 'querystring'
 
@@ -83,6 +86,9 @@ module.exports.fragments_react = ->
   react.kup = require('react-kup')
   react
 
+module.exports.fragments_jwt = ->
+  require 'jsonwebtoken'
+
 ################################################################################
 # express middleware requires
 
@@ -126,3 +132,6 @@ module.exports.fragments_expressSession = ->
 
 module.exports.fragments_basicAuth = ->
   require 'basic-auth'
+
+module.exports.fragments_expressJwt = ->
+  require 'express-jwt'
