@@ -2,7 +2,7 @@ Promise = require 'bluebird'
 request = require 'request'
 requestPromise = Promise.promisify(request)
 
-example = require '../../example/app'
+example = require '../example/app'
 
 module.exports =
 

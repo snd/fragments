@@ -89,6 +89,9 @@ module.exports.fragments_react = ->
 module.exports.fragments_jwt = ->
   require 'jsonwebtoken'
 
+module.exports.fragments_isjs = ->
+  require 'is_js'
+
 ################################################################################
 # express middleware requires
 

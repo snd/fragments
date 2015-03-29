@@ -1,3 +1,92 @@
+module.exports.fragments_commandPrefix = ->
+  'command_'
+
+module.exports.fragments_getCommandNamesFromLifetime = (
+  fragments_camelSnakeToHyphenColon
+  fragments_commandPrefix
+) ->
+  (lifetime) ->
+    Object.keys(lifetime.factories)
+      .filter (x) -> x.indexOf(fragments_commandPrefix) is 0
+      .map (x) -> x.slice(fragments_commandPrefix.length)
+      .map fragments_camelSnakeToHyphenColon
+
+module.exports.fragments_commandNameToFactoryPropertyName = (
+  fragments_commandPrefix
+  fragments_hyphenColonToCamelSnake
+) ->
+  (name) ->
+    fragments_commandPrefix + fragments_hyphenColonToCamelSnake(name)
+
+module.exports.fragments_getCommandInLifetime = (
+  fragments_Promise
+  fragments_hinoki
+  fragments_commandNameToFactoryPropertyName
+) ->
+  (lifetime, commandName) ->
+    unless commandName?
+      commandName = 'help'
+
+    commandName = commandName.toLowerCase()
+
+    commandKey = fragments_commandNameToFactoryPropertyName commandName
+    commandFactory = lifetime.factories[commandKey]
+
+    unless commandFactory?
+      return
+
+    (args...) ->
+      fragments_hinoki.get(lifetime, commandKey).then (commandInstance) ->
+        commandInstance args...
+
+module.exports.fragments_runCommand = (
+  fragments_getCommandInLifetime
+  fragments_applicationLifetime
+) ->
+  (commandName, args...) ->
+    command = fragments_getCommandInLifetime(
+      fragments_applicationLifetime
+      commandName
+    )
+    if command?
+      command args...
+    else
+      throw new Error "no such command: #{commandName}"
+
+module.exports.fragments_getCommandHelpLinesFromLifetime = (
+  fragments_getCommandNamesFromLifetime
+  fragments_commandNameToFactoryPropertyName
+  fragments_isjs
+  fragments_lodash
+) ->
+  (lifetime, args...) ->
+    _ = fragments_lodash
+    commandNames = fragments_getCommandNamesFromLifetime(lifetime)
+    # help for a specific command or namespace is requested
+    if args.length isnt 0
+      prefix = args.join(':')
+      commandNames = _.filter commandNames, (name) ->
+        fragments_isjs.startWith name, prefix
+
+    commandNames = _.sortBy(commandNames)
+
+    commandNames.map (name) ->
+      key = fragments_commandNameToFactoryPropertyName name
+      line = name
+      docstring = lifetime.factories[key].$help
+      if docstring?
+        line += ' ' + docstring
+      return line
+
+module.exports.command_help = (
+  fragments_getCommandHelpLinesFromLifetime
+  fragments_applicationLifetime
+) ->
+  (args...) ->
+    fragments_getCommandHelpLinesFromLifetime(fragments_applicationLifetime, args...).forEach (line) ->
+      console.log line
+module.exports.command_help.$help = '[namespace-prefixes...] display available commands'
+
 module.exports.command_serve = (
   fragments_APPLICATION
 ) ->
@@ -38,9 +127,9 @@ module.exports.command_serve = (
       'fragments_config_baseUrl'
       serverCallbackName
     ]
-
     fragments_APPLICATION factory
-module.exports.command_serve.$help = "... serve [server-callback-name (default: 'server')]"
+
+module.exports.command_serve.$help = "[server-callback-name (default: 'server')] - start a server with server-callback-name as callback"
 
 module.exports.command_info = (
   fragments_APPLICATION

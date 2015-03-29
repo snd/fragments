@@ -2,15 +2,13 @@
 
 var fragments = require('fragments');
 
-var runner = fragments.configure({
+module.exports = fragments({
   init: (__dirname + '/src/init'),
-  application: [(__dirname + '/src/application'), (__dirname + '/src/shared')],
+  application: (__dirname + '/src/application'),
   request: (__dirname + '/src/request'),
   middleware: (__dirname + '/src/middleware')
 });
 
 if (require.main === module) {
-  runner.command.apply(null, process.argv.slice(2));
-} else {
-  module.exports = runner.factory;
+  module.exports.runCommand();
 }

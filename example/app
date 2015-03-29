@@ -3,7 +3,7 @@
 require('coffee-script/register');
 var fragments = require('../src/fragments');
 
-var runner = fragments.configure({
+module.exports = fragments({
   init: (__dirname + '/init'),
   application: [(__dirname + '/application')],
   request: (__dirname + '/request'),
@@ -11,7 +11,5 @@ var runner = fragments.configure({
 });
 
 if (require.main === module) {
-  runner.command.apply(null, process.argv.slice(2));
-} else {
-  module.exports = runner.factory;
+  module.exports.runCommand();
 }

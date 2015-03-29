@@ -59,7 +59,8 @@
     "url-pattern": "0.7.0",
     "passage": "1.4.0",
     "react-kup": "0.4.0",
-    "jsonwebtoken": "4.2.2"
+    "jsonwebtoken": "4.2.2",
+    "is_js": "0.7.3"
   },
   "devDependencies": {
     "nodeunit": "0.9.1",
@@ -69,7 +70,7 @@
     "compile": "node_modules/coffee-script/bin/coffee --bare --compile --output lib/ src/",
     "prepublish": "npm run compile",
     "pretest": "npm run compile",
-    "test": "node_modules/nodeunit/bin/nodeunit test/unit test/integration"
+    "test": "node_modules/nodeunit/bin/nodeunit test"
   },
   "main": "lib/fragments"
 }
