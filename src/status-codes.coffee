@@ -58,4 +58,3 @@ module.exports =
   509: 'BandwidthLimitExceeded'
   510: 'NotExtended'
   511: 'NetworkAuthenticationRequired'
-
