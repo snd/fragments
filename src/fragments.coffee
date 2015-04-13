@@ -170,9 +170,9 @@ module.exports = (options = {}) ->
 
   result = (factory) ->
     initLifetime = new InitLifetime
-    hinoki.get(initLifetime, 'applicationLifetime')
+    hinoki(initLifetime, 'applicationLifetime')
       .then (applicationLifetime) ->
-        hinoki.get(applicationLifetime, 'fragments_APPLICATION')
+        hinoki(applicationLifetime, 'fragments_APPLICATION')
       .then (APPLICATION) ->
         APPLICATION factory
 
@@ -180,9 +180,9 @@ module.exports = (options = {}) ->
     unless args?
       args = process.argv.slice(2)
     initLifetime = new InitLifetime
-    hinoki.get(initLifetime, 'applicationLifetime')
+    hinoki(initLifetime, 'applicationLifetime')
       .then (applicationLifetime) ->
-        hinoki.get(applicationLifetime, 'fragments_runCommand')
+        hinoki(applicationLifetime, 'fragments_runCommand')
       .then (runCommand) ->
         runCommand args...
 

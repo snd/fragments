@@ -36,7 +36,7 @@ module.exports.fragments_getCommandInLifetime = (
       return
 
     (args...) ->
-      fragments_hinoki.get(lifetime, commandKey).then (commandInstance) ->
+      fragments_hinoki(lifetime, commandKey).then (commandInstance) ->
         commandInstance args...
 
 module.exports.fragments_runCommand = (

@@ -55,7 +55,7 @@ module.exports.fragments_MIDDLEWARE = (
       # initializes request time dependency injection
       unless req.hinokiRequestLifetime?
         req.hinokiRequestLifetime = new fragments_RequestLifetime req, res
-      fragments_hinoki.get(
+      fragments_hinoki(
         [
           new fragments_MiddlewareLifetime(next, params)
           req.hinokiRequestLifetime
