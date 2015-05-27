@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
-var fragments = require('fragments');
+var fragments = require('./src/fragments');
+var hinoki = require('hinoki');
 
-module.exports = fragments({
-  init: (__dirname + '/src/init'),
-  application: (__dirname + '/src/application'),
-  request: (__dirname + '/src/request'),
-  middleware: (__dirname + '/src/middleware')
-});
+var source = hinoki.source([
+  fragments.source,
+  (__dirname + '/src/factories')
+]);
+
+module.exports = fragments(source);
 
 if (require.main === module) {
   module.exports.runCommand();

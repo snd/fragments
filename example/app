@@ -2,13 +2,18 @@
 
 require('coffee-script/register');
 var fragments = require('../src/fragments');
+var hinoki = require('hinoki');
+var umgebung = require('umgebung');
 
-module.exports = fragments({
-  init: (__dirname + '/init'),
-  application: [(__dirname + '/application')],
-  request: (__dirname + '/request'),
-  middleware: (__dirname + '/middleware')
-});
+var source = hinoki.source([
+  __dirname,
+  fragments.source,
+  umgebung
+]);
+
+source = hinoki.decorateSourceToAlsoLookupWithPrefix(source, 'fragments_');
+
+module.exports = fragments(source);
 
 if (require.main === module) {
   module.exports.runCommand();

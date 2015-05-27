@@ -45,13 +45,11 @@
 
     "node-uuid": "1.4.3",
     "bcrypt": "0.8.2",
-    "pg": "4.3.0",
     "react": "0.12.2",
     "request": "2.55.0",
 
     "hinoki": "0.3.0-beta.17",
     "hinoki-trace": "0.1.2",
-    "fragments-forge": "0.1.0",
     "sequenz": "1.0.9",
     "kup": "1.5.0",
     "mesa": "1.0.0-alpha.11",
@@ -59,6 +57,9 @@
     "url-pattern": "0.8.0",
     "passage": "1.4.1",
     "react-kup": "0.4.0",
+    "helfer": "0.1.0",
+    "umgebung": "0.1.0",
+
     "jsonwebtoken": "5.0.0",
     "is_js": "0.7.3"
   },
@@ -67,10 +68,10 @@
     "coffee-script": "1.9.2"
   },
   "scripts": {
-    "compile": "node_modules/coffee-script/bin/coffee --bare --compile --output lib/ src/",
+    "compile": "coffee --bare --compile --output lib/ src/",
     "prepublish": "npm run compile",
     "pretest": "npm run compile",
-    "test": "node_modules/nodeunit/bin/nodeunit test"
+    "test": "nodeunit test/*.coffee"
   },
   "main": "lib/fragments"
 }
