@@ -16,8 +16,8 @@ module.exports.fragments_config_jwtEncryptionPassword = (envStringJwtEncryptionP
 module.exports.fragments_config_redisUrl = (envStringRedisUrl) ->
   envStringRedisUrl
 
-module.exports.fragments_config_redisDatabase = (envIntRedisDatabase) ->
-  envIntRedisDatabase
+module.exports.fragments_config_redisDatabase = (maybeEnvIntRedisDatabase) ->
+  maybeEnvIntRedisDatabase
 
 module.exports.fragments_config_redisSessionStorePrefix = (envStringRedisSessionStorePrefix) ->
   envStringRedisSessionStorePrefix

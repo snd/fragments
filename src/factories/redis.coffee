@@ -17,7 +17,8 @@ module.exports.fragments_redisClient = (
   redisClient = fragments_redis.createClient redisPort, redisHost
   redisClient.auth redisPassword if redisPassword?
 
-  redisClient.select fragments_config_redisDatabase
+  if fragments_config_redisDatabase?
+    redisClient.select fragments_config_redisDatabase
 
   fragments_onShutdown 'redis', ->
     fragments_console.log 'shutting down redis by calling redisClient.end()'
