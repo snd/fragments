@@ -8,5 +8,5 @@ module.exports.fragments_APPLICATION = (
     fragments_hinoki(
       fragments_source
       fragments_applicationLifetime
-      fragments_hinoki.getNamesToInject(factory)
-    ).spread(factory)
+      factory
+    )
