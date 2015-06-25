@@ -26,3 +26,4 @@ module.exports = (arg) ->
   return result
 
 module.exports.source = hinoki.source(__dirname + '/factories')
+module.exports.umgebung = require('umgebung')
