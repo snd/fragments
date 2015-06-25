@@ -2,7 +2,7 @@ hinoki = require 'hinoki'
 _ = require 'lodash'
 
 module.exports = (arg) ->
-  source = if arg then hinoki.source arg else module.exports.source
+  source = if arg? then hinoki.source arg else module.exports.source
 
   result = (factory) ->
     applicationLifetime = {}
