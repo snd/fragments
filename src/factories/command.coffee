@@ -1,67 +1,67 @@
 module.exports.fragments_commandPrefix = ->
   'command_'
 
-module.exports.fragments_getCommandNamesFromLifetime = (
+module.exports.fragments_getCommandNames = (
   fragments_helfer
   fragments_commandPrefix
+  fragments_source
 ) ->
-  (lifetime) ->
-    Object.keys(lifetime.factories)
+  ->
+    keys = fragments_source.keys?() or []
+    keys
       .filter (x) -> x.indexOf(fragments_commandPrefix) is 0
       .map (x) -> x.slice(fragments_commandPrefix.length)
       .map fragments_helfer.camelSnakeToHyphenColon
 
-module.exports.fragments_commandNameToFactoryPropertyName = (
+module.exports.fragments_commandNameToKey = (
   fragments_helfer
   fragments_commandPrefix
 ) ->
   (name) ->
     fragments_commandPrefix + fragments_helfer.hyphenColonToCamelSnake(name)
 
-module.exports.fragments_getCommandInLifetime = (
+module.exports.fragments_getCommand = (
   fragments_Promise
   fragments_hinoki
-  fragments_commandNameToFactoryPropertyName
+  fragments_commandNameToKey
   fragments_source
+  fragments_applicationLifetime
 ) ->
-  (lifetime, commandName) ->
-    unless commandName?
-      commandName = 'help'
-
-    commandName = commandName.toLowerCase()
-    commandKey = fragments_commandNameToFactoryPropertyName(commandName)
+  (commandName) ->
+    commandKey = fragments_commandNameToKey(commandName.toLowerCase())
     commandFactory = fragments_source(commandKey)
 
     unless commandFactory?
       return
 
     (args...) ->
-      fragments_hinoki(fragments_source, lifetime, commandKey).then (commandInstance) ->
-        commandInstance args...
+      fragments_hinoki(fragments_source, fragments_applicationLifetime, commandKey)
+        .then (commandInstance) ->
+          commandInstance args...
 
 module.exports.fragments_runCommand = (
-  fragments_getCommandInLifetime
-  fragments_applicationLifetime
+  fragments_getCommand
+  fragments_source
 ) ->
   (commandName, args...) ->
-    command = fragments_getCommandInLifetime(
-      fragments_applicationLifetime
-      commandName
-    )
+    unless commandName?
+      commandName = 'help'
+    command = fragments_getCommand(commandName)
     if command?
       command args...
     else
       throw new Error "no such command: #{commandName}"
 
-module.exports.fragments_getCommandHelpLinesFromLifetime = (
-  fragments_getCommandNamesFromLifetime
-  fragments_commandNameToFactoryPropertyName
+module.exports.fragments_getCommandHelpLines = (
+  fragments_getCommandNames
+  fragments_commandNameToKey
   fragments_isjs
   fragments_lodash
+  fragments_source
 ) ->
   (lifetime, args...) ->
     _ = fragments_lodash
-    commandNames = fragments_getCommandNamesFromLifetime(lifetime)
+    commandNames = fragments_getCommandNames()
     # help for a specific command or namespace is requested
     if args.length isnt 0
       prefix = args.join(':')
@@ -71,19 +71,19 @@ module.exports.fragments_getCommandHelpLinesFromLifetime = (
     commandNames = _.sortBy(commandNames)
 
     commandNames.map (name) ->
-      key = fragments_commandNameToFactoryPropertyName name
+      key = fragments_commandNameToKey name
       line = name
-      docstring = lifetime.factories[key].$help
+      factory = fragments_source(key)
+      docstring = factory.$help
       if docstring?
         line += ' ' + docstring
       return line
 
 module.exports.command_help = (
-  fragments_getCommandHelpLinesFromLifetime
-  fragments_applicationLifetime
+  fragments_getCommandHelpLines
 ) ->
   (args...) ->
-    fragments_getCommandHelpLinesFromLifetime(fragments_applicationLifetime, args...).forEach (line) ->
+    fragments_getCommandHelpLines(args...).forEach (line) ->
       console.log line
 module.exports.command_help.$help = '[namespace-prefixes...] display available commands'
 
@@ -130,13 +130,3 @@ module.exports.command_serve = (
     fragments_APPLICATION factory
 
 module.exports.command_serve.$help = "[server-callback-name (default: 'server')] - start a server with server-callback-name as callback"
-
-module.exports.command_info = (
-  fragments_APPLICATION
-) ->
-  fragments_APPLICATION (
-    fragments_console
-  ) ->
-    (args...) ->
-      fragments_console.log 'TODO'
-      fragments_console.log 'OK'
