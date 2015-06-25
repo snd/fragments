@@ -1,16 +1,26 @@
-var fragments = require('fragments');
-var hinoki = require('hinoki');
+#!/usr/bin/env node
 
 var factories = {
   server: function(
     commonMiddlewarePrelude,
-    sequenz
-    actionHelloWorld
+    sequenz,
+    actionHelloWorld,
+    notFound
   ) {
     return sequenz([
-      commonMiddlewarePrelude
-      actionHelloWorld
+      commonMiddlewarePrelude,
+      actionHelloWorld,
+      notFound
     ]);
+  },
+  notFound: function(
+    MIDDLEWARE
+  ) {
+    return MIDDLEWARE(function(
+      endNotFound
+    ) {
+      endNotFound();
+    });
   },
   actionHelloWorld: function(
     GET
@@ -23,6 +33,19 @@ var factories = {
   }
 };
 
-var app = fragments([factories, fragments.source]);
+// below is just configuration boilerplate
+
+var fragments = require('./lib/fragments');
+var hinoki = require('hinoki');
+
+var source = hinoki.source([
+  factories,
+  fragments.source,
+  fragments.umgebung
+]);
+
+var source = hinoki.decorateSourceToAlsoLookupWithPrefix(source, 'fragments_');
+
+var app = fragments(source);
 
 app.runCommand();
