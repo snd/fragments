@@ -1,4 +1,4 @@
-# migrating from 0.2.2 to 1.0.0-rc.1
+# migrating from 0.2.2 to 1.0.0-beta.1
 
 if you have any questions: i am here : )
 
