@@ -49,7 +49,7 @@ merge the 3 lifetime folders (`application`, `request`, `middleware`)
 into one and change the entry file (`fragments`)
 to build the right source.
 
-## folder structure
+### folder structure
 
 move **all** your existing factories from `request`, `middleware` and `application`
 into a single folder (`src` for example).
@@ -92,7 +92,7 @@ and the lifetime will be **request**.
 otherwise there's no way for fragments to know the lifetime and it will
 assume **application** by default.
 
-## entry file
+### entry file
 
 it's still best to have one file that configures a fragments
 application and acts as the command runner.
