@@ -9,7 +9,7 @@ mostly lifetimes and sources:
 ### lifetimes
 
 previously you had to manually divide factories into
-3 lifetimes (and folders).
+3 lifetimes (and corresponding folders).
 
 this is now automated.
 
@@ -36,7 +36,7 @@ a source is just a function that takes a key (dependency name) and returns a fac
 
 objects, filepaths and arrays of sources are automatically coerced to sources.
 
-you can write your own sources easily to auto generate factories.
+you can easily write your own sources to auto generate factories.
 
 you can wrap sources to trace, memoize, freeze, ... use your imagination.
 
@@ -56,7 +56,7 @@ into a single folder (`src` for example).
 
 filenames and folder-structure don't matter to fragments.
 
-every factory could be in its own file.
+every factory could theoretically be in its own file.
 all factories could theoretically be in the same file.
 both are bad ideas.
 
@@ -89,6 +89,9 @@ and the lifetime will be **middleware**.
 just depend on `req`, `res` or anything that depends on `req` or `res`
 and the lifetime will be **request**.
 
+otherwise there's no way for fragments to know the lifetime and it will
+assume **application** by default.
+
 ## entry file
 
 it's still best to have one file that configures a fragments
@@ -107,21 +110,38 @@ var fragments = require('fragments');
 var fragmentsPostgres = require('fragments-postgres');
 var fragmentsUser = require('fragments-user');
 
-var folderWhereAllTheFactoriesAre = __dirname + '/src';
+var folderWhereAllTheApplicationFactoriesAre = __dirname + '/src';
 
 var source = hinoki.source([
-  folderWhereAllTheFactoriesAre,
+  // fragments will look up keys in all of the following sources:
+  // our app
+  folderWhereAllTheApplicationFactoriesAre,
+  // fragments built-ins. mostly http stuff.
   fragments.source,
+  // migration commands, auto generates data accessors, ...
   fragmentsPostgres,
+  // fragments to have a user api with access control running in minutes
   fragmentsUser,
+  // auto generates env vars
   fragments.umgebung
 ]);
 
+// all fragments built-ins are prefixed with `fragments_`.
+// to save typing we make them all available without the prefix as well:
 source = hinoki.decorateSourceToAlsoLookupWithPrefix(source, 'fragments_');
 
+// this is also where we would decorate the source to do tracing, ...
+
+// give fragments the source and get a function.
+// that function, when called with a factory,
+// will parse the factories parameter names,
+// get the values and call the function with them:
 module.exports = fragments(source);
 
 if (require.main === module) {
+  // the function also has a property `runCommand()`.
+  // it will parse the command line arguments,
+  // look up the command and run it.
   module.exports.runCommand();
 }
 ```
