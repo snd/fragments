@@ -3,12 +3,11 @@
 require('coffee-script/register');
 var fragments = require('../src/fragments');
 var hinoki = require('hinoki');
-var umgebung = require('umgebung');
 
 var source = hinoki.source([
   __dirname,
   fragments.source,
-  umgebung
+  fragments.umgebung
 ]);
 
 source = hinoki.decorateSourceToAlsoLookupWithPrefix(source, 'fragments_');
