@@ -33,7 +33,9 @@ var factories = {
   }
 };
 
-// below is just configuration boilerplate
+// thats it for the application code !
+// below is just configuration boilerplate.
+// it's needed only once per app.
 
 var fragments = require('./lib/fragments');
 var hinoki = require('hinoki');
