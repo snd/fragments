@@ -13,10 +13,10 @@ previously you had to manually divide factories into
 
 this is now automated.
 
-just depend on `next`, `params` or anything that depends on `next` or `params`
+just depend on `next`, `params` directly or indirectly
 and the lifetime will be **middleware**.
 
-just depend on `req`, `res` or anything that depends on `req` or `res`
+just depend on `req`, `res` directly or indirectly
 and the lifetime will be **request**.
 
 anything else will be in the **application** lifetime.
@@ -79,14 +79,14 @@ you will get an error if you have two factories with the same name !
 ---
 
 if you had any factories that did not depend on (`req` or `res`)
-or (`next` or `params`) or any factory that depended on them
+or (`next` or `params`) directly or indirectly
 but were still in the `middleware` or `request` folder/lifetime
 they'll now be in the application lifetime.
 
-just depend on `next`, `params` or anything that depends on `next` or `params`
+just depend on `next`, `params` directly or indirectly
 and the lifetime will be **middleware**.
 
-just depend on `req`, `res` or anything that depends on `req` or `res`
+just depend on `req`, `res` directly or indirectly
 and the lifetime will be **request**.
 
 otherwise there's no way for fragments to know the lifetime and it will
@@ -97,7 +97,8 @@ assume **application** by default.
 it's still best to have one file that configures a fragments
 application and acts as the command runner.
 
-the contents of that file are a little bit different now:
+the contents of that file are a little bit different now.
+this should get you started:
 
 ``` javascript
 #!/usr/bin/env node
