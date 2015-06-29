@@ -1,9 +1,20 @@
 {
   "name": "fragments",
-  "version": "0.2.2",
-  "description": "unique powerful approach to web application development",
+  "version": "1.0.0-beta.1",
+  "description": "fragments structures web applications with (request time) dependency injection",
   "keywords": [
-
+    "framework",
+    "request",
+    "dependency",
+    "injection",
+    "structure",
+    "inversion",
+    "of",
+    "control",
+    "ioc",
+    "architecture",
+    "web",
+    "application"
   ],
   "homepage": "http://github.com/snd/fragments",
   "author": {
