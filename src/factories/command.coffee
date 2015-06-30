@@ -74,7 +74,7 @@ module.exports.fragments_getCommandHelpLines = (
       key = fragments_commandNameToKey name
       line = name
       factory = fragments_source(key)
-      docstring = factory.$help
+      docstring = factory.__help
       if docstring?
         line += ' ' + docstring
       return line
@@ -85,7 +85,7 @@ module.exports.command_help = (
   (args...) ->
     fragments_getCommandHelpLines(args...).forEach (line) ->
       console.log line
-module.exports.command_help.$help = '[namespace-prefixes...] display available commands'
+module.exports.command_help.__help = '[namespace-prefixes...] display available commands'
 
 module.exports.command_serve = (
   fragments_APPLICATION
@@ -129,4 +129,4 @@ module.exports.command_serve = (
     ]
     fragments_APPLICATION factory
 
-module.exports.command_serve.$help = "[server-callback-name (default: 'server')] - start a server with server-callback-name as callback"
+module.exports.command_serve.__help = "[server-callback-name (default: 'server')] - start a server with server-callback-name as callback"
