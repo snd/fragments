@@ -59,7 +59,7 @@ module.exports.fragments_getCommandHelpLines = (
   fragments_lodash
   fragments_source
 ) ->
-  (lifetime, args...) ->
+  (args...) ->
     _ = fragments_lodash
     commandNames = fragments_getCommandNames()
     # help for a specific command or namespace is requested
