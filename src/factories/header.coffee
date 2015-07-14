@@ -17,8 +17,9 @@ module.exports.fragments_getHeader = (
 
 for identifier, header of COMMON_REQUEST_HEADERS
   do (identifier, header) ->
+    lowerCaseHeader = header.toLowerCase()
     module.exports["fragments_header#{identifier}"] = (fragments_req) ->
-      fragments_req.headers[header] or null
+      fragments_req.headers[lowerCaseHeader] or null
 
 ################################################################################
 # set header: setHeader[Identifier]
@@ -31,7 +32,7 @@ module.exports.fragments_setHeader = (
   (key, value) ->
     unless key? and value?
       throw new Error 'needs exactly two arguments'
-    fragments_res.setHeader key.toLowerCase(), value
+    fragments_res.setHeader key, value
 
 for identifier, header of COMMON_RESPONSE_HEADERS
   do (identifier, header) ->

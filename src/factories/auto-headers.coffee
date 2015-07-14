@@ -13,17 +13,17 @@ module.exports.fragments_autoHeaders = ->
     # (<frame>, <iframe>, <object) on the same origin as the page itself.
     # used to prevent clickjacking.
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/X-Frame-Options
-    'x-frame-options': 'sameorigin'
+    'X-Frame-Options': 'sameorigin'
 
     # enable the cross-site scripting filter built into IE8+ and chrome
     # even if the user disabled it.
     # `mode=block` will prevent rendering completely instead of just sanitizing
-    'x-xss-protection': '1; mode=block'
+    'X-XSS-Protection': '1; mode=block'
 
     # prevents internet explorer and google chrome from
     # mime-sniffing a response away from the declared content-type.
     # this reduces exposure to drive-by download attacks.
-    'x-content-type-options': 'nosniff'
+    'X-Content-Type-Options': 'nosniff'
 
     # once a supported browser receives this header that browser will
     # prevent any communications from being sent over http to the
@@ -33,13 +33,13 @@ module.exports.fragments_autoHeaders = ->
     # may intercept http connections and inject the header or remove it.
     # read also:
     # https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
-    'strict-transport-security': "max-age=#{secondsInADay}"
+    'Strict-Transport-Security': "max-age=#{secondsInADay}"
 
     # since we are using compression its important that
     # caches cache different versions for different encodings.
     # read also:
     # http://www.fastly.com/blog/best-practices-for-using-the-vary-header/
-    'vary': 'accept-encoding'
+    'Vary': 'accept-encoding'
   }
 
 module.exports.fragments_autoHeadersMiddleware = (
@@ -52,4 +52,3 @@ module.exports.fragments_autoHeadersMiddleware = (
   ) ->
     fragments_setHeaders fragments_autoHeaders
     fragments_next()
-

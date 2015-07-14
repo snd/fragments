@@ -23,6 +23,9 @@ this text should not be longer than one page.
 
 <!--
 
+fragments is hackable
+small codebase.
+
 fragments was born out of the
 
 keeping complex request handling logic testable.

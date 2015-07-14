@@ -88,6 +88,19 @@ module.exports =
                 httpOnly: true
             token: null
 
+          test.equal response.rawHeaders[0], 'X-Frame-Options'
+          test.equal response.rawHeaders[1], 'sameorigin'
+          test.equal response.rawHeaders[2], 'X-XSS-Protection'
+          test.equal response.rawHeaders[3], '1; mode=block'
+          test.equal response.rawHeaders[4], 'X-Content-Type-Options'
+          test.equal response.rawHeaders[5], 'nosniff'
+          test.equal response.rawHeaders[6], 'Strict-Transport-Security'
+          test.equal response.rawHeaders[7], 'max-age=86400'
+          test.equal response.rawHeaders[8], 'Vary'
+          test.equal response.rawHeaders[9], 'accept-encoding'
+          test.equal response.rawHeaders[10], 'Content-Type'
+          test.equal response.rawHeaders[11], 'application/json; charset=utf-8'
+
           shutdown()
         .then ->
           test.done()
