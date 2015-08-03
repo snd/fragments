@@ -9,7 +9,7 @@ i won't support any but the newest version.*
 
 *the documentation in this readme is work in progress and currently unfinished !*
 
-[![BETA](http://img.shields.io/badge/Stability-ALPHA-orange.svg?style=flat)]()
+[![BETA](http://img.shields.io/badge/Stability-BETA-orange.svg?style=flat)]()
 [![NPM Package](https://img.shields.io/npm/v/fragments.svg?style=flat)](https://www.npmjs.org/package/fragments)
 [![Build Status](https://travis-ci.org/snd/fragments.svg?branch=master)](https://travis-ci.org/snd/fragments/branches)
 [![Dependencies](https://david-dm.org/snd/fragments.svg)](https://david-dm.org/snd/fragments)
