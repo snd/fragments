@@ -1,6 +1,6 @@
-Promise = require 'bluebird'
-request = require 'request'
-requestPromise = Promise.promisify(request)
+got = require 'got'
+streamToPromise = require 'stream-to-promise'
+cookieModule = require 'cookie'
 
 example = require '../example/app'
 
@@ -14,13 +14,10 @@ module.exports =
     ) ->
       command_serve('helloWorldServer')
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.equal response.body, 'Hello World'
+          got envStringBaseUrl
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.equal res.body, 'Hello World'
           shutdown()
         .then ->
           test.done()
@@ -33,13 +30,10 @@ module.exports =
     ) ->
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/not-found'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 404
-          test.equal response.body, 'Not Found'
+          got envStringBaseUrl + '/not-found'
+        .catch got.HTTPError, (err) ->
+          test.equal err.statusCode, 404
+          test.equal err.response.body, 'Not Found'
           shutdown()
         .then ->
           test.done()
@@ -52,19 +46,16 @@ module.exports =
     ) ->
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/echo?a=1&b=2'
-            json: true
+          got.post envStringBaseUrl + '/echo?a=1&b=2',
             headers:
               'user-agent': 'integration test'
+            json: true
             body:
               hello: 'world'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.deepEqual response.body,
-            method: 'GET'
+        .then (res) ->
+          test.equal res.statusCode, 200
+          expectedBody =
+            method: 'POST'
             url: '/echo?a=1&b=2'
             urlWithoutQuerystring: '/echo'
             query:
@@ -74,7 +65,7 @@ module.exports =
               hello: 'world'
             userAgent: 'integration test'
             ip: '::ffff:127.0.0.1'
-            isGzipEnabled: false
+            isGzipEnabled: true
             match:
               part: 'echo'
             alsoMatch: {}
@@ -87,19 +78,20 @@ module.exports =
                 originalMaxAge: null
                 httpOnly: true
             token: null
+          test.deepEqual res.body, expectedBody
 
-          test.equal response.rawHeaders[0], 'X-Frame-Options'
-          test.equal response.rawHeaders[1], 'sameorigin'
-          test.equal response.rawHeaders[2], 'X-XSS-Protection'
-          test.equal response.rawHeaders[3], '1; mode=block'
-          test.equal response.rawHeaders[4], 'X-Content-Type-Options'
-          test.equal response.rawHeaders[5], 'nosniff'
-          test.equal response.rawHeaders[6], 'Strict-Transport-Security'
-          test.equal response.rawHeaders[7], 'max-age=86400'
-          test.equal response.rawHeaders[8], 'Vary'
-          test.equal response.rawHeaders[9], 'accept-encoding'
-          test.equal response.rawHeaders[10], 'Content-Type'
-          test.equal response.rawHeaders[11], 'application/json; charset=utf-8'
+          test.equal res.rawHeaders[0], 'X-Frame-Options'
+          test.equal res.rawHeaders[1], 'sameorigin'
+          test.equal res.rawHeaders[2], 'X-XSS-Protection'
+          test.equal res.rawHeaders[3], '1; mode=block'
+          test.equal res.rawHeaders[4], 'X-Content-Type-Options'
+          test.equal res.rawHeaders[5], 'nosniff'
+          test.equal res.rawHeaders[6], 'Strict-Transport-Security'
+          test.equal res.rawHeaders[7], 'max-age=86400'
+          test.equal res.rawHeaders[8], 'Vary'
+          test.equal res.rawHeaders[9], 'accept-encoding'
+          test.equal res.rawHeaders[10], 'Content-Type'
+          test.equal res.rawHeaders[11], 'application/json; charset=utf-8'
 
           shutdown()
         .then ->
@@ -114,40 +106,25 @@ module.exports =
       command_serve()
         .then ->
 
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/method'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'get'
+          got envStringBaseUrl + '/method'
+        .then (res) ->
+          test.equal res.body, 'get'
 
-          requestPromise(
-            method: 'POST'
-            url: envStringBaseUrl + '/method'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'post'
+          got.post envStringBaseUrl + '/method'
+        .then (res) ->
+          test.equal res.body, 'post'
 
-          requestPromise(
-            method: 'PUT'
-            url: envStringBaseUrl + '/method'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'put'
+          got.put envStringBaseUrl + '/method'
+        .then (res) ->
+          test.equal res.body, 'put'
 
-          requestPromise(
-            method: 'PATCH'
-            url: envStringBaseUrl + '/method'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'patch'
+          got.patch envStringBaseUrl + '/method'
+        .then (res) ->
+          test.equal res.body, 'patch'
 
-          requestPromise(
-            method: 'DELETE'
-            url: envStringBaseUrl + '/method'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'delete'
+          got.delete envStringBaseUrl + '/method'
+        .then (res) ->
+          test.equal res.body, 'delete'
 
           shutdown()
         .then ->
@@ -162,40 +139,25 @@ module.exports =
       command_serve()
         .then ->
 
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/any'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'method is GET'
+          got envStringBaseUrl + '/any'
+        .then (res) ->
+          test.equal res.body, 'method is GET'
 
-          requestPromise(
-            method: 'POST'
-            url: envStringBaseUrl + '/any'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'method is POST'
+          got.post envStringBaseUrl + '/any'
+        .then (res) ->
+          test.equal res.body, 'method is POST'
 
-          requestPromise(
-            method: 'PUT'
-            url: envStringBaseUrl + '/any'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'method is PUT'
+          got.put envStringBaseUrl + '/any'
+        .then (res) ->
+          test.equal res.body, 'method is PUT'
 
-          requestPromise(
-            method: 'PATCH'
-            url: envStringBaseUrl + '/any'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'method is PATCH'
+          got.patch envStringBaseUrl + '/any'
+        .then (res) ->
+          test.equal res.body, 'method is PATCH'
 
-          requestPromise(
-            method: 'DELETE'
-            url: envStringBaseUrl + '/any'
-          )
-        .then ([response]) ->
-          test.equal response.body, 'method is DELETE'
+          got.delete envStringBaseUrl + '/any'
+        .then (res) ->
+          test.equal res.body, 'method is DELETE'
 
           shutdown()
         .then ->
@@ -209,13 +171,10 @@ module.exports =
     ) ->
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/error'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 500
-          test.equal response.body, 'Server Error'
+          got envStringBaseUrl + '/error'
+        .catch got.HTTPError, (err) ->
+          test.equal err.statusCode, 500
+          test.equal err.response.body, 'Server Error'
           shutdown()
         .then ->
           test.done()
@@ -226,16 +185,16 @@ module.exports =
       shutdown
       envStringBaseUrl
     ) ->
+      test.expect 3
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/redirect'
-            followRedirect: false
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 302
-          test.equal response.headers.location, '/go-here'
+          stream = got.stream envStringBaseUrl + '/redirect'
+          stream.on 'redirect', (res) ->
+            test.equal res.statusCode, 302
+            test.equal res.headers.location, '/redirect-target'
+          streamToPromise(stream)
+        .then (res) ->
+          test.equal res.toString(), 'you made it'
           shutdown()
         .then ->
           test.done()
@@ -248,14 +207,11 @@ module.exports =
     ) ->
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/text'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.equal response.body, 'Hello World'
-          test.equal response.headers['content-type'], 'text/plain; charset=utf-8'
+          got envStringBaseUrl + '/text'
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.equal res.body, 'Hello World'
+          test.equal res.headers['content-type'], 'text/plain; charset=utf-8'
           shutdown()
         .then ->
           test.done()
@@ -268,14 +224,12 @@ module.exports =
     ) ->
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/json'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 422
-          test.equal response.body, '{"a":1}'
-          test.equal response.headers['content-type'], 'application/json; charset=utf-8'
+
+          got envStringBaseUrl + '/json'
+        .catch got.HTTPError, (err) ->
+          test.equal err.statusCode, 422
+          test.equal err.response.body, '{"a":1}'
+          test.equal err.response.headers['content-type'], 'application/json; charset=utf-8'
           shutdown()
         .then ->
           test.done()
@@ -288,14 +242,11 @@ module.exports =
     ) ->
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/xml'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 429
-          test.equal response.body, '<test></test>'
-          test.equal response.headers['content-type'], 'application/xml; charset=utf-8'
+          got envStringBaseUrl + '/xml'
+        .catch got.HTTPError, (err) ->
+          test.equal err.statusCode, 429
+          test.equal err.response.body, '<test></test>'
+          test.equal err.response.headers['content-type'], 'application/xml; charset=utf-8'
           shutdown()
         .then ->
           test.done()
@@ -308,14 +259,11 @@ module.exports =
     ) ->
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/kup'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.equal response.headers['content-type'], 'text/html; charset=utf-8'
-          test.equal response.body, '<html><head><meta name="robots" content="index,follow" /><meta name="keywords" content="test" /></head><body><div id="container"><div id="navigation-wrapper"><div id="navigation"></div></div><div id="content-wrapper"><span>content</span></div></div></body></html>'
+          got envStringBaseUrl + '/kup'
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.equal res.headers['content-type'], 'text/html; charset=utf-8'
+          test.equal res.body, '<html><head><meta name="robots" content="index,follow" /><meta name="keywords" content="test" /></head><body><div id="container"><div id="navigation-wrapper"><div id="navigation"></div></div><div id="content-wrapper"><span>content</span></div></div></body></html>'
           shutdown()
         .then ->
           test.done()
@@ -328,14 +276,11 @@ module.exports =
     ) ->
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/react'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.equal response.headers['content-type'], 'text/html; charset=utf-8'
-          test.equal response.body, '<div id="content"></div>'
+          got envStringBaseUrl + '/react'
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.equal res.headers['content-type'], 'text/html; charset=utf-8'
+          test.equal res.body, '<div id="content"></div>'
           shutdown()
         .then ->
           test.done()
@@ -348,14 +293,11 @@ module.exports =
     ) ->
       command_serve()
         .then ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/react-kup'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 404
-          test.equal response.headers['content-type'], 'text/html; charset=utf-8'
-          test.equal response.body, '<html><head></head><body><div id="container"><div id="navigation-wrapper"><div id="navigation"></div></div><div id="content-wrapper"><div id="content"></div></div></div></body></html>'
+          got envStringBaseUrl + '/react-kup'
+        .catch got.HTTPError, (err) ->
+          test.equal err.statusCode, 404
+          test.equal err.response.headers['content-type'], 'text/html; charset=utf-8'
+          test.equal err.response.body, '<html><head></head><body><div id="container"><div id="navigation-wrapper"><div id="navigation"></div></div><div id="content-wrapper"><div id="content"></div></div></div></body></html>'
           shutdown()
         .then ->
           test.done()
@@ -365,82 +307,75 @@ module.exports =
       command_serve
       shutdown
       envStringBaseUrl
+      fragments_sessionCookieName
     ) ->
-      jar = request.jar()
       command_serve()
+        .bind({})
         .then ->
-          requestPromise(
-            method: 'GET'
+          got envStringBaseUrl + '/session',
             json: true
-            url: envStringBaseUrl + '/session'
-            jar: jar
-          )
-        .then ([response]) ->
-          delete response.body.cookie
-          test.deepEqual response.body, {}
+        .then (res) ->
+          # session is initially empty except for the cookie
+          delete res.body.cookie
+          test.deepEqual res.body, {}
 
-          requestPromise(
-            method: 'PATCH'
-            url: envStringBaseUrl + '/session'
-            body: {
+          cookieString = res.headers['set-cookie'][0]
+          test.notEqual cookieString, null
+          cookieObject = cookieModule.parse cookieString
+          # session cookie was set
+          sessionId = cookieObject[fragments_sessionCookieName]
+          test.notEqual sessionId, null
+          @cookie = cookieModule.serialize(fragments_sessionCookieName, sessionId)
+
+          got.patch envStringBaseUrl + '/session',
+            headers:
+              cookie: @cookie
+            json: true
+            body:
               a: 1
-            }
-            json: true
-            jar: jar
-          )
-        .then ([response]) ->
-          delete response.body.cookie
-          test.deepEqual response.body, {a: 1}
+        .then (res) ->
+          delete res.body.cookie
+          test.deepEqual res.body, {a: 1}
 
-          requestPromise(
-            method: 'GET'
+          got envStringBaseUrl + '/session',
+            headers:
+              cookie: @cookie
             json: true
-            url: envStringBaseUrl + '/session'
-            jar: jar
-          )
-        .then ([response]) ->
-          delete response.body.cookie
-          test.deepEqual response.body, {a: 1}
+        .then (res) ->
+          delete res.body.cookie
+          test.deepEqual res.body, {a: 1}
 
-          requestPromise(
-            method: 'PATCH'
-            url: envStringBaseUrl + '/session'
-            body: {
+          got.patch envStringBaseUrl + '/session',
+            headers:
+              cookie: @cookie
+            json: true
+            body:
               a: 2
               b: 3
-            }
-            json: true
-            jar: jar
-          )
-        .then ([response]) ->
-          delete response.body.cookie
-          test.deepEqual response.body, {a: 2, b: 3}
+        .then (res) ->
+          delete res.body.cookie
+          test.deepEqual res.body, {a: 2, b: 3}
 
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/session'
+          got envStringBaseUrl + '/session',
+            headers:
+              cookie: @cookie
             json: true
-            jar: jar
-          )
-        .then ([response]) ->
-          delete response.body.cookie
-          test.deepEqual response.body, {a: 2, b: 3}
+        .then (res) ->
+          delete res.body.cookie
+          test.deepEqual res.body, {a: 2, b: 3}
 
-          requestPromise(
-            method: 'DELETE'
-            url: envStringBaseUrl + '/session'
-            jar: jar
-          )
-        .then ([response]) ->
-          requestPromise(
-            method: 'GET'
-            url: envStringBaseUrl + '/session'
+          got.delete envStringBaseUrl + '/session',
+            headers:
+              cookie: @cookie
+        .then (res) ->
+
+          got envStringBaseUrl + '/session',
+            headers:
+              cookie: @cookie
             json: true
-            jar: jar
-          )
-        .then ([response]) ->
-          delete response.body.cookie
-          test.deepEqual response.body, {}
+        .then (res) ->
+          delete res.body.cookie
+          test.deepEqual res.body, {}
 
           shutdown()
         .then ->
@@ -455,90 +390,67 @@ module.exports =
       command_serve()
         .bind({})
         .then ->
-          requestPromise(
-            method: 'GET'
+          got envStringBaseUrl + '/token',
             json: true
-            url: envStringBaseUrl + '/token'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.equal response.body, null
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.equal res.body, null
 
-          requestPromise(
-            method: 'POST'
-            url: envStringBaseUrl + '/token'
-            body: {
+          got.post envStringBaseUrl + '/token',
+            json: true
+            body:
               first_name: 'mad'
               last_name: 'max'
-            }
-            json: true
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.ok response.body.token.length > 10
-          this.token = response.body.token
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.ok res.body.token.length > 10
+          this.token = res.body.token
 
-          requestPromise(
-            method: 'GET'
+          got envStringBaseUrl + '/token',
             json: true
             headers:
               authorization: "Bearer #{this.token}"
-            url: envStringBaseUrl + '/token'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.deepEqual response.body,
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.deepEqual res.body,
             first_name: 'mad'
             last_name: 'max'
 
-          requestPromise(
-            method: 'GET'
+          got envStringBaseUrl + '/token',
             json: true
             headers:
               authorization: "Bearer garbagetoken"
-            url: envStringBaseUrl + '/token'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.equal response.body, null
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.equal res.body, null
 
-          requestPromise(
-            method: 'POST'
-            url: envStringBaseUrl + '/token'
-            body: {
+          got.post envStringBaseUrl + '/token',
+            json: true
+            body:
               first_name: 'bubba'
               last_name: 'zanetti'
-            }
-            json: true
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.ok response.body.token.length > 10
-          token = response.body.token
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.ok res.body.token.length > 10
+          token = res.body.token
 
-          requestPromise(
-            method: 'GET'
+          got envStringBaseUrl + '/token',
             json: true
             headers:
               authorization: "Bearer #{token}"
-            url: envStringBaseUrl + '/token'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.deepEqual response.body,
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.deepEqual res.body,
             first_name: 'bubba'
             last_name: 'zanetti'
 
-          requestPromise(
-            method: 'GET'
+          got envStringBaseUrl + '/token',
             json: true
             headers:
               authorization: "Bearer #{this.token}"
-            url: envStringBaseUrl + '/token'
-          )
-        .then ([response]) ->
-          test.equal response.statusCode, 200
-          test.deepEqual response.body,
+        .then (res) ->
+          test.equal res.statusCode, 200
+          test.deepEqual res.body,
             first_name: 'mad'
             last_name: 'max'
 
