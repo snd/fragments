@@ -13,9 +13,14 @@ module.exports.fragments_redisSessionStore = (
     client: fragments_redisClient
     prefix: fragments_config_redisSessionStorePrefix
 
+module.exports.fragments_sessionCookieName = ->
+  # dont make it so easy to find out we are using connect
+  'session-id'
+
 module.exports.fragments_sessionMiddleware = (
   fragments_expressSession
   fragments_config_sessionSecret
+  fragments_sessionCookieName
   fragments_redisSessionStore
   fragments_uuid
 ) ->
@@ -27,6 +32,7 @@ module.exports.fragments_sessionMiddleware = (
     # make warnings disappear
     saveUninitialized: true
     resave: false
+    name: fragments_sessionCookieName
     cookie:
       httpOnly: true
 
