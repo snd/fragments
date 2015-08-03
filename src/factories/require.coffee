@@ -57,14 +57,8 @@ module.exports.fragments_helfer = ->
 ################################################################################
 # npm module requires
 
-module.exports.fragments_request = ->
-  require 'request'
-
 module.exports.fragments_Promise = ->
   require 'bluebird'
-
-module.exports.fragments_moment = ->
-  require 'moment'
 
 module.exports.fragments_lodash = ->
   require 'lodash'
@@ -80,9 +74,6 @@ module.exports.fragments_bcrypt = (fragments_Promise) ->
 
 module.exports.fragments_uuid = ->
   require 'node-uuid'
-
-module.exports.fragments_mandrill = ->
-  require 'mandrill-api/mandrill'
 
 module.exports.fragments_react = ->
   react = require 'react/addons'
