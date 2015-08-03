@@ -1,5 +1,5 @@
-module.exports.route_echo = (GET) ->
-  GET '/echo', (
+module.exports.actionEcho = (ANY) ->
+  ANY '/echo', (
     endJSON
     method
     req
@@ -30,12 +30,12 @@ module.exports.route_echo = (GET) ->
       session: session
       token: token
 
-module.exports.route_error = (GET) ->
+module.exports.actionError = (GET) ->
   GET '/error', (
   ) ->
     throw new Error 'TESTING ERRORS: this is supposed to get thrown and logged'
 
-module.exports.route_method = (
+module.exports.actionMethod = (
   GET
   PUT
   POST
@@ -52,7 +52,7 @@ module.exports.route_method = (
     DELETE url, (end) -> end 'delete'
   )
 
-module.exports.route_any = (
+module.exports.actionAny = (
   ANY
 ) ->
   ANY '/any', (
@@ -61,31 +61,38 @@ module.exports.route_any = (
   ) ->
     end "method is #{method}"
 
-module.exports.route_redirect = (GET) ->
+module.exports.actionRedirect = (GET) ->
   GET '/redirect', (
     redirect
   ) ->
-    redirect '/go-here'
+    console.log 'REDIRECTING'
+    redirect '/redirect-target'
 
-module.exports.route_text = (GET) ->
+module.exports.actionRedirectTarget = (GET) ->
+  GET '/redirect-target', (
+    endText
+  ) ->
+    endText 'you made it'
+
+module.exports.actionText = (GET) ->
   GET '/text', (
     endText
   ) ->
     endText 'Hello World'
 
-module.exports.route_json = (GET) ->
+module.exports.actionJson = (GET) ->
   GET '/json', (
     endUnprocessableJSON
   ) ->
     endUnprocessableJSON {a: 1}
 
-module.exports.route_xml = (GET) ->
+module.exports.actionXml = (GET) ->
   GET '/xml', (
     end429XML
   ) ->
     end429XML '<test></test>'
 
-module.exports.route_kup = (GET) ->
+module.exports.actionKup = (GET) ->
   GET '/kup', (
     layout
     k
@@ -103,7 +110,7 @@ module.exports.route_kup = (GET) ->
       k.span 'content'
     endKup()
 
-module.exports.route_react = (GET) ->
+module.exports.actionReact = (GET) ->
   GET '/react', (
     ComponentContent
     endReact
@@ -111,7 +118,7 @@ module.exports.route_react = (GET) ->
   ) ->
     endReact react.createElement ComponentContent
 
-module.exports.route_reactKup = (GET) ->
+module.exports.actionReactKup = (GET) ->
   GET '/react-kup', (
     ComponentContent
     end404ReactWithLayout
@@ -119,26 +126,24 @@ module.exports.route_reactKup = (GET) ->
   ) ->
     end404ReactWithLayout layout, ComponentContent
 
-module.exports.route_sessionGet = (GET) ->
+module.exports.actionSessionGet = (GET) ->
   GET '/session', (
     session
     endJSON
   ) ->
     endJSON session
 
-module.exports.route_sessionSet = (PATCH) ->
+module.exports.actionSessionSet = (PATCH) ->
   PATCH '/session', (
     session
     body
     endJSON
     _
   ) ->
-    console.log 'alright'
     _.extend session, body
-    console.log 'still alright'
     endJSON session
 
-module.exports.route_sessionDelete = (DELETE) ->
+module.exports.actionSessionDelete = (DELETE) ->
   DELETE '/session', (
     session
     end
@@ -146,7 +151,7 @@ module.exports.route_sessionDelete = (DELETE) ->
     session.destroy ->
       end()
 
-module.exports.route_tokenCreate = (POST) ->
+module.exports.actionTokenCreate = (POST) ->
   POST '/token', (
     newJwt
     body
@@ -154,7 +159,7 @@ module.exports.route_tokenCreate = (POST) ->
   ) ->
     endJSON {token: newJwt(body)}
 
-module.exports.route_tokenRead = (GET) ->
+module.exports.actionTokenRead = (GET) ->
   GET '/token', (
     token
     endJSON

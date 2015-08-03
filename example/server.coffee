@@ -16,43 +16,45 @@ module.exports.server = (
   commonMiddlewarePrelude
   autoHeadersMiddleware
 
-  route_echo
-  route_error
-  route_method
-  route_any
-  route_redirect
-  route_text
-  route_json
-  route_xml
-  route_kup
-  route_react
-  route_reactKup
-  route_sessionSet
-  route_sessionGet
-  route_sessionDelete
-  route_tokenCreate
-  route_tokenRead
+  actionEcho
+  actionError
+  actionMethod
+  actionAny
+  actionRedirect
+  actionRedirectTarget
+  actionText
+  actionJson
+  actionXml
+  actionKup
+  actionReact
+  actionReactKup
+  actionSessionSet
+  actionSessionGet
+  actionSessionDelete
+  actionTokenCreate
+  actionTokenRead
 ) ->
   sequenz [
     commonMiddlewarePrelude
     autoHeadersMiddleware
 
-    route_echo
-    route_error
-    route_method
-    route_any
-    route_redirect
-    route_text
-    route_json
-    route_xml
-    route_kup
-    route_react
-    route_reactKup
-    route_sessionSet
-    route_sessionGet
-    route_sessionDelete
-    route_tokenCreate
-    route_tokenRead
+    actionEcho
+    actionError
+    actionMethod
+    actionAny
+    actionRedirect
+    actionRedirectTarget
+    actionText
+    actionJson
+    actionXml
+    actionKup
+    actionReact
+    actionReactKup
+    actionSessionSet
+    actionSessionGet
+    actionSessionDelete
+    actionTokenCreate
+    actionTokenRead
 
     MIDDLEWARE (endNotFound) ->
       endNotFound()
