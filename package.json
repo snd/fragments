@@ -1,6 +1,6 @@
 {
   "name": "fragments",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "fragments structures web applications with (request time) dependency injection",
   "keywords": [
     "framework",
