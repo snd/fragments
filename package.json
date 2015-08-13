@@ -54,7 +54,7 @@
     "express-jwt": "3.0.1",
 
     "node-uuid": "1.4.3",
-    "bcrypt": "0.8.4",
+    "bcrypt": "0.8.5",
     "react": "0.12.2",
 
     "hinoki": "1.0.0-rc.3",
