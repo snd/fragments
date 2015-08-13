@@ -105,7 +105,7 @@ module.exports.command_serve = (
         server = fragments_http.createServer serverCallback
         server.on 'listening', ->
           fragments_onShutdown 'server', ->
-            console.log 'shutting down server by calling server.close()'
+            fragments_console.log 'shutting down server by calling server.close()'
             fragments_Promise.promisify(server.close, server)()
           # shutdown postgres and redis before server to prevent server from crashing
           # when they are already stopped and the server is still trying to use them

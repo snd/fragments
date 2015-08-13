@@ -7,6 +7,7 @@ module.exports.fragments_MIDDLEWARE = (
   fragments_hinoki
   fragments_source
   fragments_applicationLifetime
+  fragments_console
 ) ->
   (factoryOrName) ->
     (req, res, next, params) ->
@@ -26,9 +27,9 @@ module.exports.fragments_MIDDLEWARE = (
         factoryOrName
       ).catch (err) ->
         # your custom error handling
-        console.log 'ERROR'
-        console.log err
-        console.log err.stack
+        fragments_console.error 'ERROR'
+        fragments_console.error err
+        fragments_console.error err.stack
         res.statusCode = 500
         res.end 'Server Error'
 

@@ -1,9 +1,16 @@
 language: node_js
 node_js:
     - "0.12"
-    - iojs
+    - "iojs-2"
+    - "iojs-3"
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
 script: npm test
 env:
-  - PORT=8080 BASE_URL="http://localhost:8080" STATIC_PATH="static" SESSION_SECRET="338e281187f9e8f66c792705203b4c50" REDIS_SESSION_STORE_PREFIX="example:" REDIS_URL="redis://localhost:6379/" REDIS_DATABASE=0 JWT_ENCRYPTION_PASSWORD="super secret jwt encryption password" JWT_SIGNING_SECRET="super secret jwt signing secret"
+  - CXX=g++-4.8 PORT=8080 BASE_URL="http://localhost:8080" STATIC_PATH="static" SESSION_SECRET="338e281187f9e8f66c792705203b4c50" REDIS_SESSION_STORE_PREFIX="example:" REDIS_URL="redis://localhost:6379/" REDIS_DATABASE=0 JWT_ENCRYPTION_PASSWORD="super secret jwt encryption password" JWT_SIGNING_SECRET="super secret jwt signing secret"
 services:
   - redis-server
