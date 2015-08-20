@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib/factories/helper.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">lib/factories/helper.js</span></h1>
+    <h2>
+        Statements: <span class="metric">11.54% <small>(6 / 52)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">0% <small>(0 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">11.54% <small>(6 / 52)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">lib/factories/</a> &#187; helper.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Generated by CoffeeScript 1.9.3
+module.exports.fragments_getOpenPort = <span class="fstat-no" title="function not covered" >function(fragments_Promise, fragments_net) {</span>
+<span class="cstat-no" title="statement not covered" >  var getOpenPort;</span>
+<span class="cstat-no" title="statement not covered" >  getOpenPort = <span class="fstat-no" title="function not covered" >function(port, tries) {</span></span>
+<span class="cstat-no" title="statement not covered" >    if (port == null) {</span>
+<span class="cstat-no" title="statement not covered" >      port = 8000;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (tries == null) {</span>
+<span class="cstat-no" title="statement not covered" >      tries = 100;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (tries &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >      return fragments_Promise.reject(new Error("tries exhausted at port " + port));</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return new fragments_Promise(<span class="fstat-no" title="function not covered" >function(resolve) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var server;</span>
+<span class="cstat-no" title="statement not covered" >      server = fragments_net.createServer();</span>
+<span class="cstat-no" title="statement not covered" >      server.once('listening', <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        server.once('close', <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return resolve(port);</span>
+        });
+<span class="cstat-no" title="statement not covered" >        return server.close();</span>
+      });
+<span class="cstat-no" title="statement not covered" >      server.once('error', <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        return resolve(getOpenPort(port + 1, tries - 1));</span>
+      });
+<span class="cstat-no" title="statement not covered" >      return server.listen(port);</span>
+    });
+  };
+<span class="cstat-no" title="statement not covered" >  return getOpenPort;</span>
+};
+&nbsp;
+module.exports.fragments_comparePasswordToHashed = <span class="fstat-no" title="function not covered" >function(fragments_bcrypt) {</span>
+<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >function(password, hash) {</span></span>
+<span class="cstat-no" title="statement not covered" >    return fragments_bcrypt.compareAsync(password, hash);</span>
+  };
+};
+&nbsp;
+module.exports.fragments_hashPassword = <span class="fstat-no" title="function not covered" >function(fragments_Promise, fragments_bcrypt, fragments_config_bcryptCost) {</span>
+<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >function(password) {</span></span>
+<span class="cstat-no" title="statement not covered" >    if (password != null) {</span>
+<span class="cstat-no" title="statement not covered" >      return fragments_bcrypt.genSaltAsync(fragments_config_bcryptCost).then(<span class="fstat-no" title="function not covered" >function(salt) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return fragments_bcrypt.hashAsync(password, salt);</span>
+      });
+    } else {
+<span class="cstat-no" title="statement not covered" >      return fragments_Promise.resolve(null);</span>
+    }
+  };
+};
+&nbsp;
+module.exports.fragments_setCreatedAt = <span class="fstat-no" title="function not covered" >function(fragments_lodash) {</span>
+<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >function(record) {</span></span>
+<span class="cstat-no" title="statement not covered" >    var defensiveCopy;</span>
+<span class="cstat-no" title="statement not covered" >    defensiveCopy = fragments_lodash.clone(record);</span>
+<span class="cstat-no" title="statement not covered" >    defensiveCopy.created_at = new Date;</span>
+<span class="cstat-no" title="statement not covered" >    return defensiveCopy;</span>
+  };
+};
+&nbsp;
+module.exports.fragments_setUpdatedAt = <span class="fstat-no" title="function not covered" >function(fragments_lodash) {</span>
+<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >function(record) {</span></span>
+<span class="cstat-no" title="statement not covered" >    var defensiveCopy;</span>
+<span class="cstat-no" title="statement not covered" >    defensiveCopy = fragments_lodash.clone(record);</span>
+<span class="cstat-no" title="statement not covered" >    defensiveCopy.updated_at = new Date;</span>
+<span class="cstat-no" title="statement not covered" >    return defensiveCopy;</span>
+  };
+};
+&nbsp;
+module.exports.fragments_hashPasswordIfPresent = <span class="fstat-no" title="function not covered" >function(fragments_Promise, fragments_lodash, fragments_hashPassword) {</span>
+<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >function(record, key) {</span></span>
+<span class="cstat-no" title="statement not covered" >    if (key == null) {</span>
+<span class="cstat-no" title="statement not covered" >      key = 'password';</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (record[key] != null) {</span>
+<span class="cstat-no" title="statement not covered" >      return fragments_hashPassword(record[key]).then(<span class="fstat-no" title="function not covered" >function(hashedPassword) {</span></span>
+<span class="cstat-no" title="statement not covered" >        var defensiveCopy;</span>
+<span class="cstat-no" title="statement not covered" >        defensiveCopy = fragments_lodash.clone(record);</span>
+<span class="cstat-no" title="statement not covered" >        defensiveCopy[key] = hashedPassword;</span>
+<span class="cstat-no" title="statement not covered" >        return defensiveCopy;</span>
+      });
+    } else {
+<span class="cstat-no" title="statement not covered" >      return fragments_Promise.resolve(record);</span>
+    }
+  };
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Aug 20 2015 16:47:21 GMT+0200 (CEST)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

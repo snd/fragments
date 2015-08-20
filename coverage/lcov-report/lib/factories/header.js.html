@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib/factories/header.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">lib/factories/header.js</span></h1>
+    <h2>
+        Statements: <span class="metric">87.5% <small>(42 / 48)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">57.14% <small>(8 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">85.71% <small>(12 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">89.36% <small>(42 / 47)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">lib/factories/</a> &#187; header.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-yes">39</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-yes">175</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">175</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-yes">41</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-yes">175</span>
+<span class="cline-any cline-yes">175</span>
+<span class="cline-any cline-yes">175</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Generated by CoffeeScript 1.9.3
+var COMMON_REQUEST_HEADERS, COMMON_RESPONSE_HEADERS, QUICK_CONTENT_TYPES, contentType, fn, fn1, fn2, header, identifier,
+  hasProp = {}.hasOwnProperty;
+&nbsp;
+COMMON_REQUEST_HEADERS = require('../common-request-headers');
+&nbsp;
+COMMON_RESPONSE_HEADERS = require('../common-response-headers');
+&nbsp;
+module.exports.fragments_getHeader = <span class="fstat-no" title="function not covered" >function(fragments_req) {</span>
+<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >function(name) {</span></span>
+<span class="cstat-no" title="statement not covered" >    return fragments_req.headers[name.toLowerCase()] || null;</span>
+  };
+};
+&nbsp;
+fn = function(identifier, header) {
+  var lowerCaseHeader;
+  lowerCaseHeader = header.toLowerCase();
+  return module.exports["fragments_header" + identifier] = function(fragments_req) {
+    return fragments_req.headers[lowerCaseHeader] || null;
+  };
+};
+for (identifier in COMMON_REQUEST_HEADERS) {
+  header = COMMON_REQUEST_HEADERS[identifier];
+  fn(identifier, header);
+}
+&nbsp;
+module.exports.fragments_setHeader = function(fragments_res) {
+  return function(key, value) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!((key != null) &amp;&amp; (value != null))) {
+<span class="cstat-no" title="statement not covered" >      throw new Error('needs exactly two arguments');</span>
+    }
+    return fragments_res.setHeader(key, value);
+  };
+};
+&nbsp;
+fn1 = function(identifier, header) {
+  return module.exports["fragments_setHeader" + identifier] = function(fragments_res) {
+    return function(value) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (arguments.length !== 1) {
+<span class="cstat-no" title="statement not covered" >        throw new Error('needs exactly one argument');</span>
+      }
+      return fragments_res.setHeader(header, value);
+    };
+  };
+};
+for (identifier in COMMON_RESPONSE_HEADERS) {
+  header = COMMON_RESPONSE_HEADERS[identifier];
+  fn1(identifier, header);
+}
+&nbsp;
+module.exports.fragments_setHeaders = function(fragments_setHeader) {
+  return function(headers) {
+    var key, results, value;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ('object' !== typeof headers) {
+<span class="cstat-no" title="statement not covered" >      throw new Error('needs one argument which must be an object');</span>
+    }
+    results = [];
+    for (key in headers) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!hasProp.call(headers, key)) <span class="cstat-no" title="statement not covered" >continue;</span>
+      value = headers[key];
+      results.push(fragments_setHeader(key, value));
+    }
+    return results;
+  };
+};
+&nbsp;
+QUICK_CONTENT_TYPES = {
+  HTML: 'text/html; charset=utf-8',
+  JSON: 'application/json; charset=utf-8',
+  XML: 'application/xml; charset=utf-8',
+  Text: 'text/plain; charset=utf-8'
+};
+&nbsp;
+fn2 = function(identifier, contentType) {
+  return module.exports["fragments_setHeaderContentType" + identifier] = function(fragments_setHeaderContentType) {
+    return function() {
+      return fragments_setHeaderContentType(contentType);
+    };
+  };
+};
+for (identifier in QUICK_CONTENT_TYPES) {
+  contentType = QUICK_CONTENT_TYPES[identifier];
+  fn2(identifier, contentType);
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Aug 20 2015 16:47:21 GMT+0200 (CEST)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
