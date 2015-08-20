@@ -12,6 +12,7 @@ i won't support any but the newest version.*
 [![BETA](http://img.shields.io/badge/Stability-BETA-orange.svg?style=flat)]()
 [![NPM Package](https://img.shields.io/npm/v/fragments.svg?style=flat)](https://www.npmjs.org/package/fragments)
 [![Build Status](https://travis-ci.org/snd/fragments.svg?branch=master)](https://travis-ci.org/snd/fragments/branches)
+[![coverage-78%](http://img.shields.io/badge/coverage-78%-brightgreen.svg?style=flat)](https://rawgit.com/snd/fragments/master/coverage/lcov-report/index.html)
 [![Dependencies](https://david-dm.org/snd/fragments.svg)](https://david-dm.org/snd/fragments)
 
 <!--
