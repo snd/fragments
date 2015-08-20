@@ -78,8 +78,7 @@
     "cookie": "0.2.0",
     "tape": "4.2.0",
     "coffeetape": "1.0.1",
-    "istanbul": "0.3.18",
-    "coffeeify": "1.1.0"
+    "istanbul": "0.3.18"
   },
   "scripts": {
     "compile": "coffee --bare --compile --output lib/ src/",
