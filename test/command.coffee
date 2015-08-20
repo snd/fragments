@@ -1,9 +1,10 @@
-fragments = require '../src/fragments'
+test = require 'tape'
 hinoki = require 'hinoki'
+
+fragments = require '../lib/fragments'
 example = require '../example/app'
 
-module.exports =
-  # 'getCommandNamesFromLifetime': (test) ->
+  # test 'getCommandNamesFromLifetime', (t) ->
   #   fragments (
   #     fragments_getCommandNamesFromLifetime
   #   ) ->
@@ -12,44 +13,44 @@ module.exports =
   #         command_app_myCommand: ->
   #         command_app_myOtherCommand: ->
   #         command_pg_migrate: ->
-  #     test.deepEqual fragments_getCommandNamesFromLifetime(lifetime),
+  #     t.deepEqual fragments_getCommandNamesFromLifetime(lifetime),
   #       [
   #         'app:my-command',
   #         'app:my-other-command'
   #         'pg:migrate'
   #       ]
-  #     test.done()
+  #     t.end()
 
-  'unrecognized command': (test) ->
-    app = fragments()
-    app (
-      fragments_runCommand
-    ) ->
-      try
-        fragments_runCommand 'app:my-command'
-      catch e
-        test.equal e.message, 'no such command: app:my-command'
-        test.done()
+test 'unrecognized command', (t) ->
+  app = fragments()
+  app (
+    fragments_runCommand
+  ) ->
+    try
+      fragments_runCommand 'app:my-command'
+    catch e
+      t.equal e.message, 'no such command: app:my-command'
+      t.end()
 
-  'recognized command': (test) ->
-    app = fragments [
-      fragments.source
-      {
-        command_app_myCommand: ->
-          (arg1, arg2) ->
-            test.equal arg1, value1
-            test.equal arg2, value2
-            test.done()
-      }
-    ]
-    value1 = {}
-    value2 = {}
-    app (
-      fragments_runCommand
-    ) ->
-      fragments_runCommand 'app:my-command', value1, value2
+test 'recognized command', (t) ->
+  app = fragments [
+    fragments.source
+    {
+      command_app_myCommand: ->
+        (arg1, arg2) ->
+          t.equal arg1, value1
+          t.equal arg2, value2
+          t.end()
+    }
+  ]
+  value1 = {}
+  value2 = {}
+  app (
+    fragments_runCommand
+  ) ->
+    fragments_runCommand 'app:my-command', value1, value2
 
-#   'getCommandHelpLinesFromLifetime': (test) ->
+#   test 'getCommandHelpLinesFromLifetime', (t) ->
 #     app = fragments()
 #     app (
 #       getCommandHelpLinesFromLifetime
@@ -69,7 +70,7 @@ module.exports =
 #       lifetime.factories.command_bravo_charlie.$help = 'does something'
 #       lifetime.factories.command_delta_bravo_alpha.$help = 'does something else'
 #
-#       test.deepEqual getCommandHelpLinesFromLifetime(lifetime),
+#       t.deepEqual getCommandHelpLinesFromLifetime(lifetime),
 #         [
 #           'alpha'
 #           'alpha:bravo'
@@ -82,49 +83,49 @@ module.exports =
 #           'echo:delta'
 #         ]
 #
-#       test.deepEqual getCommandHelpLinesFromLifetime(lifetime, 'bravo'),
+#       t.deepEqual getCommandHelpLinesFromLifetime(lifetime, 'bravo'),
 #         [
 #           'bravo:alpha'
 #           'bravo:bravo'
 #           'bravo:charlie does something'
 #         ]
 #
-#       test.deepEqual getCommandHelpLinesFromLifetime(lifetime, 'delta', 'bravo'),
+#       t.deepEqual getCommandHelpLinesFromLifetime(lifetime, 'delta', 'bravo'),
 #         [
 #           'delta:bravo:alpha does something else'
 #           'delta:bravo:echo'
 #         ]
 #
-#       test.deepEqual getCommandHelpLinesFromLifetime(lifetime, 'delta:bravo'),
+#       t.deepEqual getCommandHelpLinesFromLifetime(lifetime, 'delta:bravo'),
 #         [
 #           'delta:bravo:alpha does something else'
 #           'delta:bravo:echo'
 #         ]
 #
-#       test.deepEqual getCommandHelpLinesFromLifetime(lifetime, 'echo:delta'),
+#       t.deepEqual getCommandHelpLinesFromLifetime(lifetime, 'echo:delta'),
 #         [
 #           'echo:delta'
 #         ]
-#       test.done()
+#       t.end()
 
-  'start and stop default server': (test) ->
-    example (
-      command_serve
-      fragments_shutdown
-    ) ->
-      command_serve()
-        .then ->
-          fragments_shutdown()
-        .then ->
-          test.done()
+test 'start and stop default server', (t) ->
+  example (
+    command_serve
+    fragments_shutdown
+  ) ->
+    command_serve()
+      .then ->
+        fragments_shutdown()
+      .then ->
+        t.end()
 
-  'start and stop custom server': (test) ->
-    example (
-      command_serve
-      shutdown
-    ) ->
-      command_serve('helloWorldServer')
-        .then ->
-          shutdown()
-        .then ->
-          test.done()
+test 'start and stop custom server', (t) ->
+  example (
+    command_serve
+    shutdown
+  ) ->
+    command_serve('helloWorldServer')
+      .then ->
+        shutdown()
+      .then ->
+        t.end()
