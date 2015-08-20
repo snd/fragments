@@ -329,8 +329,9 @@ test 'session', (t) ->
         got.patch envStringBaseUrl + '/session',
           headers:
             cookie: @cookie
+            'content-type': 'application/json'
           json: true
-          body:
+          body: JSON.stringify
             a: 1
       .then (res) ->
         delete res.body.cookie
@@ -347,8 +348,9 @@ test 'session', (t) ->
         got.patch envStringBaseUrl + '/session',
           headers:
             cookie: @cookie
+            'content-type': 'application/json'
           json: true
-          body:
+          body: JSON.stringify
             a: 2
             b: 3
       .then (res) ->
