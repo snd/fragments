@@ -10,7 +10,7 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-4.8
-script: npm test
+script: npm run $NPM_COMMAND
 env:
   global:
     - CXX=g++-4.8
@@ -23,5 +23,20 @@ env:
     - REDIS_DATABASE=0
     - JWT_ENCRYPTION_PASSWORD="super secret jwt encryption password"
     - JWT_SIGNING_SECRET="super secret jwt signing secret"
+  matrix:
+    - NPM_COMMAND=test
+    - NPM_COMMAND=test-with-coverage
 services:
   - redis-server
+matrix:
+  exclude:
+    # don't collect code coverage more than once
+    - node_js: "iojs-2"
+      env: NPM_COMMAND=test-with-coverage
+    - node_js: "iojs-3"
+      env: NPM_COMMAND=test-with-coverage
+    - node_js: "4.0"
+      env: NPM_COMMAND=test-with-coverage
+    # don't test 0.12 more than once
+    - node_js: "0.12"
+      env: NPM_COMMAND=test
