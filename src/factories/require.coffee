@@ -76,9 +76,12 @@ module.exports.fragments_uuid = ->
   require 'node-uuid'
 
 module.exports.fragments_react = ->
-  react = require 'react/addons'
+  react = require 'react'
   react.kup = require('react-kup')
   react
+
+module.exports.fragments_reactDomServer = ->
+  require 'react-dom/server'
 
 module.exports.fragments_jwt = ->
   require 'jsonwebtoken'
