@@ -71,7 +71,7 @@
     "codecov.io": "0.1.6",
     "coffee-script": "1.10.0",
     "stream-to-promise": "1.1.0",
-    "got": "6.1.1",
+    "got": "5.3.2",
     "cookie": "0.2.3",
     "tape": "4.4.0",
     "coffeetape": "1.0.1",
