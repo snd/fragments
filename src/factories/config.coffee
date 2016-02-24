@@ -19,8 +19,8 @@ module.exports.fragments_config_redisUrl = (envStringRedisUrl) ->
 module.exports.fragments_config_redisDatabase = (maybeEnvIntRedisDatabase) ->
   maybeEnvIntRedisDatabase
 
-module.exports.fragments_config_redisSessionStorePrefix = (envStringRedisSessionStorePrefix) ->
-  envStringRedisSessionStorePrefix
+module.exports.fragments_config_redisPrefix = (envStringRedisPrefix) ->
+  envStringRedisPrefix
 
 module.exports.fragments_config_sessionSecret = (envStringSessionSecret) ->
   envStringSessionSecret
