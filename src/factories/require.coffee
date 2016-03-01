@@ -108,7 +108,7 @@ module.exports.fragments_expressBodyParser = ->
   require 'body-parser'
 
 module.exports.fragments_queryParser = (fragments_url) ->
-  qs = require 'query-string'
+  qs = require 'qs'
 
   (options) ->
     (req, res, next) ->
