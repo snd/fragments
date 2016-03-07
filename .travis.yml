@@ -1,9 +1,9 @@
 language: node_js
 node_js:
     - "0.12"
-    - "iojs-2"
     - "iojs-3"
-    - "4.0"
+    - "4"
+    - "5"
 addons:
   apt:
     sources:
@@ -19,7 +19,7 @@ env:
     - BASE_URL="http://localhost:8080"
     - STATIC_PATH="static"
     - SESSION_SECRET="338e281187f9e8f66c792705203b4c50"
-    - REDIS_SESSION_STORE_PREFIX="example:"
+    - REDIS_PREFIX="example:"
     - REDIS_URL="redis://localhost:6379/"
     - REDIS_DATABASE=0
     - JWT_ENCRYPTION_PASSWORD="super secret jwt encryption password"
@@ -32,11 +32,11 @@ services:
 matrix:
   exclude:
     # don't collect code coverage more than once
-    - node_js: "iojs-2"
-      env: NPM_COMMAND=test-with-coverage
     - node_js: "iojs-3"
       env: NPM_COMMAND=test-with-coverage
-    - node_js: "4.0"
+    - node_js: "4"
+      env: NPM_COMMAND=test-with-coverage
+    - node_js: "5"
       env: NPM_COMMAND=test-with-coverage
     # don't test 0.12 more than once
     - node_js: "0.12"

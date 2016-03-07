@@ -30,55 +30,49 @@
     "type": "git",
     "url": "git://github.com/snd/fragments.git"
   },
-  "licenses": {
-    "type": "MIT",
-    "url": "git://github.com/snd/fragments/LICENSE"
-  },
+  "license": "MIT",
   "engines": {
     "node": ">=0.12.0"
   },
   "dependencies": {
-    "bluebird": "2.10.0",
-    "lodash": "3.10.1",
-    "redis": "1.0.0",
-
-    "connect": "3.4.0",
-    "express-session": "1.11.3",
-    "connect-redis": "2.5.0",
-    "compression": "1.5.2",
-    "cookie-parser": "1.3.5",
-    "serve-static": "1.10.0",
-    "body-parser": "1.13.3",
     "basic-auth": "1.0.3",
-    "qs": "5.0.0",
-    "express-jwt": "3.1.0",
-
-    "node-uuid": "1.4.3",
     "bcrypt": "0.8.5",
-    "react": "0.13.3",
-
-    "hinoki": "1.0.0-rc.6",
-    "sequenz": "1.0.9",
-    "kup": "1.5.0",
-    "zuvor": "0.1",
-    "url-pattern": "0.10.2",
-    "passage": "1.7.1",
-    "react-kup": "0.5.1",
+    "bluebird": "3.3.3",
+    "body-parser": "1.15.0",
+    "compression": "1.6.1",
+    "connect": "3.4.1",
+    "connect-redis": "3.0.2",
+    "cookie-parser": "1.4.1",
+    "express-jwt": "3.3.0",
+    "express-session": "1.13.0",
     "helfer": "0.1.0",
+    "hinoki": "1.0.0-rc.8",
+    "is_js": "0.8.0",
+    "jsonwebtoken": "5.7.0",
+    "kup": "1.5.0",
+    "lodash": "4.6.1",
+    "node-uuid": "1.4.7",
+    "passage": "1.7.2",
+    "qs": "6.1.0",
+    "react": "0.14.7",
+    "react-dom": "0.14.7",
+    "react-kup": "0.5.2",
+    "redis": "2.4.2",
+    "sequenz": "1.0.9",
+    "serve-static": "1.10.2",
     "umgebung": "0.1.0",
-
-    "jsonwebtoken": "5.0.5",
-    "is_js": "0.7.4"
+    "url-pattern": "1.0.1",
+    "zuvor": "0.1"
   },
   "devDependencies": {
     "codecov.io": "0.1.6",
     "coffee-script": "1.10.0",
-    "stream-to-promise": "1.0.4",
-    "got": "4.2.0",
-    "cookie": "0.2.0",
-    "tape": "4.2.0",
+    "stream-to-promise": "1.1.0",
+    "got": "5.3.2",
+    "cookie": "0.2.3",
+    "tape": "4.5.0",
     "coffeetape": "1.0.1",
-    "istanbul": "0.3.19"
+    "istanbul": "0.4.2"
   },
   "scripts": {
     "compile": "coffee --bare --compile --output lib/ src/",

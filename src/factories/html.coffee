@@ -8,13 +8,14 @@ module.exports.fragments_kupToHtml = (fragments_kup) ->
 
 module.exports.fragments_reactKupToHtml = (
   fragments_react
-  fragments_reactComponentToHtml
+  fragments_reactDomServer
 ) ->
   (f) ->
-    fragments_react.renderToStaticMarkup fragments_react.kup f
+    fragments_reactDomServer.renderToStaticMarkup fragments_react.kup f
 
 module.exports.fragments_reactToHtml = (
   fragments_react
+  fragments_reactDomServer
 ) ->
   (elementOrComponent, rest...) ->
     element =
@@ -22,7 +23,7 @@ module.exports.fragments_reactToHtml = (
         elementOrComponent
       else
         fragments_react.createElement elementOrComponent, rest...
-    fragments_react.renderToStaticMarkup element
+    fragments_reactDomServer.renderToStaticMarkup element
 
 module.exports.fragments_endHTML = (
   fragments_setHeaderContentTypeHTML

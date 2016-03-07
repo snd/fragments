@@ -5,16 +5,20 @@ module.exports.fragments_redisClient = (
   fragments_console
   fragments_config_redisUrl
   fragments_config_redisDatabase
+  fragments_config_redisPrefix
   fragments_onShutdown
 ) ->
   parsedRedisURL = fragments_url.parse fragments_config_redisUrl
-  redisPort= parsedRedisURL.port
+  redisPort = parsedRedisURL.port
   redisHost = parsedRedisURL.hostname
 
   if parsedRedisURL.auth?
     redisPassword = parsedRedisURL.auth.split(':')[1]
 
-  redisClient = fragments_redis.createClient redisPort, redisHost
+  options =
+    prefix: fragments_config_redisPrefix
+
+  redisClient = fragments_redis.createClient redisPort, redisHost, options
   redisClient.auth redisPassword if redisPassword?
 
   if fragments_config_redisDatabase?

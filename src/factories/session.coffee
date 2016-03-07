@@ -7,11 +7,9 @@ module.exports.fragments_RedisSessionStore = (
 module.exports.fragments_redisSessionStore = (
   fragments_RedisSessionStore
   fragments_redisClient
-  fragments_config_redisSessionStorePrefix
 ) ->
   new fragments_RedisSessionStore
     client: fragments_redisClient
-    prefix: fragments_config_redisSessionStorePrefix
 
 module.exports.fragments_sessionCookieName = ->
   # dont make it so easy to find out we are using connect
