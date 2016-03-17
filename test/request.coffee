@@ -17,8 +17,9 @@ test 'hello world', (t) ->
       .then (res) ->
         t.equal res.statusCode, 200
         t.equal res.body, 'Hello World'
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'not found', (t) ->
@@ -33,8 +34,9 @@ test 'not found', (t) ->
       .catch got.HTTPError, (err) ->
         t.equal err.statusCode, 404
         t.equal err.response.body, 'Not Found'
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'echo request data as json', (t) ->
@@ -47,13 +49,13 @@ test 'echo request data as json', (t) ->
       .then ->
         got.post envStringBaseUrl + '/echo?a=1&b=2',
           headers:
-            'user-agent': 'integration t'
+            'user-agent': 'integration test'
           json: true
           body:
             hello: 'world'
       .then (res) ->
         t.equal res.statusCode, 200
-        planedBody =
+        expectedBody =
           method: 'POST'
           url: '/echo?a=1&b=2'
           urlWithoutQuerystring: '/echo'
@@ -62,7 +64,7 @@ test 'echo request data as json', (t) ->
             b: '2'
           body:
             hello: 'world'
-          userAgent: 'integration t'
+          userAgent: 'integration test'
           ip: '::ffff:127.0.0.1'
           isGzipEnabled: true
           match:
@@ -77,7 +79,7 @@ test 'echo request data as json', (t) ->
               originalMaxAge: null
               httpOnly: true
           token: null
-        t.deepEqual res.body, planedBody
+        t.deepEqual res.body, expectedBody
 
         t.equal res.rawHeaders[0], 'X-Frame-Options'
         t.equal res.rawHeaders[1], 'sameorigin'
@@ -92,8 +94,9 @@ test 'echo request data as json', (t) ->
         t.equal res.rawHeaders[10], 'Content-Type'
         t.equal res.rawHeaders[11], 'application/json; charset=utf-8'
 
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'method', (t) ->
@@ -125,8 +128,9 @@ test 'method', (t) ->
       .then (res) ->
         t.equal res.body, 'delete'
 
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'any', (t) ->
@@ -158,8 +162,9 @@ test 'any', (t) ->
       .then (res) ->
         t.equal res.body, 'method is DELETE'
 
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'error', (t) ->
@@ -194,8 +199,10 @@ test 'redirect', (t) ->
         streamToPromise(stream)
       .then (res) ->
         t.equal res.toString(), 'you made it'
+
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'text', (t) ->
@@ -211,8 +218,10 @@ test 'text', (t) ->
         t.equal res.statusCode, 200
         t.equal res.body, 'Hello World'
         t.equal res.headers['content-type'], 'text/plain; charset=utf-8'
+
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'json', (t) ->
@@ -229,8 +238,10 @@ test 'json', (t) ->
         t.equal err.statusCode, 422
         t.equal err.response.body, '{"a":1}'
         t.equal err.response.headers['content-type'], 'application/json; charset=utf-8'
+
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'xml', (t) ->
@@ -246,8 +257,10 @@ test 'xml', (t) ->
         t.equal err.statusCode, 429
         t.equal err.response.body, '<test></test>'
         t.equal err.response.headers['content-type'], 'application/xml; charset=utf-8'
+
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'kup', (t) ->
@@ -263,8 +276,10 @@ test 'kup', (t) ->
         t.equal res.statusCode, 200
         t.equal res.headers['content-type'], 'text/html; charset=utf-8'
         t.equal res.body, '<html><head><meta name="robots" content="index,follow" /><meta name="keywords" content="test" /></head><body><div id="container"><div id="navigation-wrapper"><div id="navigation"></div></div><div id="content-wrapper"><span>content</span></div></div></body></html>'
+
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'react', (t) ->
@@ -280,8 +295,10 @@ test 'react', (t) ->
         t.equal res.statusCode, 200
         t.equal res.headers['content-type'], 'text/html; charset=utf-8'
         t.equal res.body, '<div id="content"></div>'
+
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'react kup', (t) ->
@@ -297,8 +314,10 @@ test 'react kup', (t) ->
         t.equal err.statusCode, 404
         t.equal err.response.headers['content-type'], 'text/html; charset=utf-8'
         t.equal err.response.body, '<html><head></head><body><div id="container"><div id="navigation-wrapper"><div id="navigation"></div></div><div id="content-wrapper"><div id="content"></div></div></div></body></html>'
+
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'session', (t) ->
@@ -378,8 +397,9 @@ test 'session', (t) ->
         delete res.body.cookie
         t.deepEqual res.body, {}
 
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
 
 test 'token', (t) ->
@@ -455,6 +475,7 @@ test 'token', (t) ->
           first_name: 'mad'
           last_name: 'max'
 
+      .finally ->
         shutdown()
-      .then ->
+      .finally ->
         t.end()
