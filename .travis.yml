@@ -32,3 +32,5 @@ matrix:
     # don't collect code coverage more than once
     - node_js: "4"
       env: NPM_COMMAND=test-with-coverage
+    - node_js: "5"
+      env: NPM_COMMAND=test
